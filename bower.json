@@ -23,6 +23,8 @@
     "tests"
   ],
   "devDependencies": {
-    "jasmine": "~2.3.4"
+    "jasmine": "~2.3.4",
+    "jquery": "~2.1.4",
+    "jasmine-jquery": "~2.1.0"
   }
 }
