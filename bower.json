@@ -1,0 +1,28 @@
+{
+  "name": "numble",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jasonyost/numble",
+  "authors": [
+    "Jason Yost <jyost@gocortexlabs.com>"
+  ],
+  "description": "Simple jQuery number selector",
+  "main": "src/jquery.numble.js",
+  "keywords": [
+    "jquery",
+    "plugin",
+    "jquery-plugin",
+    "number-picker",
+    "number-selector"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jasmine": "~2.3.4"
+  }
+}
