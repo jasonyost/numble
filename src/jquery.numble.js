@@ -21,7 +21,8 @@
 			includeButtons: true,
 			allowNegative: true,
 			maxValue: undefined,
-			minValue: undefined
+			minValue: undefined,
+			initialValue: undefined
 		};
 
 	// The actual plugin constructor
@@ -58,19 +59,20 @@
 			$(element).after("<div class=\"numble-control\"></div>");
 			var control = $(element).siblings(".numble-control");
 
-			// Display the original value of the control
-			var originalValue = parseInt($(element).val()) || 0;
-			numble.debugMessage("original value " + originalValue);
-			control.text(originalValue);
-
 			// bind to change event of the input to update the new control
 			$(element).change(function() {
-				numble.debugMessage("change detected");
+				numble.debugMessage("change detected: " + $(this).val());
 				var control = $(this).siblings(".numble-control");
 				control.text($(this).val());
 				// replace the controls on change
 				numble.addButtons(this, numble.settings);
 			});
+
+			// Display the original value of the control
+			var originalValue = this.getIntialValue(element, settings);
+			numble.debugMessage("original value " + originalValue);
+			$(element).val(originalValue);
+			$(element).change();
 
 			// bind the mouse wheel to the control
 			control.bind("mousewheel DOMMouseScroll", function(event) {
@@ -150,6 +152,13 @@
 				this.debugMessage("decrementing to " + val);
 			}
 
+		},
+		getIntialValue: function(element, settings){
+			var val = parseInt($(element).val()) || 0;
+			if(val === 0){
+				val = parseInt(settings.initialValue) || 0;
+			}
+			return val;
 		},
 		debugMessage: function(message) {
 			if (this.settings.debug) {

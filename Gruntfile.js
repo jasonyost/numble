@@ -62,11 +62,12 @@ module.exports = function(grunt) {
 			},
 	      options: {
 	        specs: 'test/spec/test.js',
-	        keepRunner : true,
+	        keepRunner : false,
 					vendor: [
         		'bower_components/jquery/dist/jquery.js',
         		'bower_components/jasmine-jquery/lib/jasmine-jquery.js'
       		],
+					outfile: 'test/_SpecRunner.html'
 	      }
     },
 
