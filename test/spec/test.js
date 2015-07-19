@@ -18,25 +18,24 @@
 
 			describe('given an existing numerical value', function() {
 				it('should display the value in the new element', function() {
-					// expect($('.value')).toContainText('42');
-          pending();
+					expect($('.value')).toContainText('42');
 				});
 			});
 
-      describe('given no original value', function(){
-        it('should set the initial number to zero', function(){
-          expect($('.no-value')).toContainText('0');
-        });
-      });
+			describe('given no original value', function() {
+				it('should set the initial number to zero', function() {
+					expect($('.no-value')).toContainText('0');
+				});
+			});
 
-      // FIXME Need to test the scroll event on the mouse, the code is working but I am unable to
-      // determine how to send the mouse wheel event to the page
+			// FIXME Need to test the scroll event on the mouse, the code is working but I am unable to
+			// determine how to send the mouse wheel event to the page
 			describe('mouse wheel control', function() {
 
 				describe('in Firefox', function() {
 					it('should bind the element to the DOMMouseScroll event', function() {
 
-            // var scrollEvent = spyOnEvent('.numble-control', 'DOMMouseScroll');
+						// var scrollEvent = spyOnEvent('.numble-control', 'DOMMouseScroll');
 						// window.ChromeWheel = function() {
 						// 	var evt = document.createEvent("MouseEvents");
 						// 	evt.initMouseEvent(
@@ -58,20 +57,51 @@
 						// 	);
 						// 	$('.numble-control').dispatchEvent(evt);
 						// }
-            // $('.numble-control').trigger("DOMMouseScroll");
-            // expect("DOMMouseScroll").toHaveBeenTriggeredOn('.numble-control');
-            // expect(scrollEvent).toHaveBeenTriggered();
-            pending();
+						// $('.numble-control').trigger("DOMMouseScroll");
+						// expect("DOMMouseScroll").toHaveBeenTriggeredOn('.numble-control');
+						// expect(scrollEvent).toHaveBeenTriggered();
+						pending();
 					});
 				});
 
-        describe('in Webkit', function(){
-          it('should bind to the mousewheel event', function(){
-            pending();
+				describe('in Webkit', function() {
+					it('should bind to the mousewheel event', function() {
+						pending();
+					});
+				});
+			});
+
+			describe('clickable controls', function() {
+
+				describe('up arrow', function() {
+					it('should add an arrow in the up direction to the control', function() {
+						expect($('.numble-increment')).toBeInDOM();
+					});
+
+					describe('when clicked', function(){
+            it('should increment the value', function(){
+              $('.no-value .numble-increment').click();
+              expect($('.no-value .numble-control')).toContainText("1");
+            });
           });
-        });
+				});
+
+				describe('down arrow', function() {
+					it('should add an arrow in the down direction to the control', function() {
+						expect($('.numble-decrement')).toBeInDOM();
+					});
+
+          describe('when clicked', function(){
+            it('should decrement the value', function(){
+              $('.no-value .numble-decrement').click();
+              expect($('.no-value .numble-control')).toContainText("0");
+            });
+          });
+
+				});
 
 			});
+
 		});
 
 	});

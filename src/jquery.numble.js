@@ -42,11 +42,11 @@
 			// and this.settings
 			// you can add more functions like the one below and
 			// call them like so: this.yourOtherFunction(this.element, this.settings).
-			this.debugMessage("numble initialized", this.settings);
+			this.debugMessage("numble initialized");
 			this.setupControls(this.element, this.settings);
 		},
 		setupControls: function(element, settings) {
-
+			var numble = this;
 			// Hide the original control to prevent default browser styling interference
 			$(element).addClass('numble-original');
 			$(element).hide();
@@ -57,30 +57,63 @@
 
 			// Display the original value of the control
 			var originalValue = parseInt($(element).val()) || 0;
-			this.debugMessage("original value " + originalValue, this.settings);
+			this.debugMessage("original value " + originalValue);
 			control.text(originalValue);
+
+			// bind to change event of the input to update the new control
+			$(element).change(function() {
+				numble.debugMessage("change detected");
+				var control = $(this).siblings('.numble-control');
+				control.text($(this).val());
+
+				// replace the controls on change
+				numble.addButtons(this, numble.settings);
+
+			});
 
 			// bind the mouse wheel to the control
 			control.bind('mousewheel DOMMouseScroll', function(event) {
-				var val = parseInt($(element).val()) || 0;
 				if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
-					console.log('received scroll up event');
-					val++;
-					$(this).text(val);
-					$(element).val(val);
-					console.log('incrementing to ' + val);
+					numble.incrementValue(element);
 				} else {
-					console.log('received scroll down event');
-					val--;
-					$(this).text(val);
-					$(element).val(val)
-					console.log('decrementing to ' + val);
+					numble.decrementValue(element);
 				}
 			});
 
+			// add up and down arrows
+			this.addButtons(this.element, this.settings);
+
 		},
-		debugMessage: function(message, settings) {
-			if (settings.debug) {
+		addButtons: function(element, settings) {
+			var numble = this;
+			var n = $(element).siblings('.numble-control');
+			n.append('<span class="numble-increment numble-arrow">&#x25B2;</span>');
+			n.append('<span class="numble-decrement numble-arrow">&#x25BC;</span>');
+
+			n.find('.numble-increment').click(function(){
+				numble.incrementValue(element);
+			});
+
+			n.find('.numble-decrement').click(function(){
+				numble.decrementValue(element);
+			});
+		},
+		incrementValue: function(element) {
+			this.debugMessage('received scroll up event');
+			var val = parseInt($(element).val()) || 0;
+			val++;
+			$(element).val(val).trigger('change');
+			this.debugMessage('incrementing to ' + val);
+		},
+		decrementValue: function(element) {
+			this.debugMessage('received scroll down event');
+			var val = parseInt($(element).val()) || 0;
+			val--;
+			$(element).val(val).trigger('change');
+			this.debugMessage('decrementing to ' + val);
+		},
+		debugMessage: function(message) {
+			if (this.settings.debug) {
 				console.log(message);
 			}
 		}
