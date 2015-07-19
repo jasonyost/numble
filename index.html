@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>numble by jasonyost</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>numble</h1>
+        <p>A simple number input field plugin</p>
+
+        <p class="view"><a href="https://github.com/jasonyost/numble">View the Project on GitHub <small>jasonyost/numble</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/jasonyost/numble/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jasonyost/numble/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jasonyost/numble">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="numble" class="anchor" href="#numble" aria-hidden="true"><span class="octicon octicon-link"></span></a>numble</h1>
+
+<p>A simple number input field plugin</p>
+
+<h2>
+<a id="installation--usage" class="anchor" href="#installation--usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation &amp; Usage</h2>
+
+<p>Download or clone the repo and include the <a href="https://raw.githubusercontent.com/jasonyost/numble/master/dist/jquery.numble.min.js">jquery.numble.min.js</a> file in your html. numble is a jQuery plugin so be sure it is loaded after jQuery</p>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://code.jquery.com/jquery-2.1.4.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>dist/jquery.numble.min.js<span class="pl-pds">"</span></span> <span class="pl-e">charset</span>=<span class="pl-s"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<p>numble can then be called on the desired input(s)</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">'</span>input[type=number]<span class="pl-pds">'</span></span>).numble();</pre></div>
+
+<h2>
+<a id="parameters" class="anchor" href="#parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameters</h2>
+
+<p>numble accepts the following parameters with defaults listed</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">'</span>input[type=number]<span class="pl-pds">'</span></span>).numble({
+  debug<span class="pl-k">:</span> <span class="pl-c1">false</span>, <span class="pl-c">// if set to true will log console messages from numble</span>
+  includeButtons<span class="pl-k">:</span> <span class="pl-c1">true</span>, <span class="pl-c">// if set to false up and down arrows won't be added to the control</span>
+  allowNegative<span class="pl-k">:</span> <span class="pl-c1">true</span>, <span class="pl-c">// if set to false numble won't decrement the value below zero</span>
+  maxValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span> <span class="pl-c">// if set numble won't increment value above setting</span>
+});</pre></div>
+
+<h2>
+<a id="styling" class="anchor" href="#styling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Styling</h2>
+
+<p>numble adds a few elements add classes to the page and control. Inline CSS is not added by numble other than to hide the original input, you will need to provide styles for the control in your own stylesheet or use the <a href="https://raw.githubusercontent.com/jasonyost/numble/master/demo/demo.css">demo stylesheet</a>.</p>
+
+<div class="highlight highlight-css"><pre><span class="pl-e">.numble-wrapper</span>{
+  <span class="pl-c">/* contains the original input and the numble control */</span>
+}
+
+<span class="pl-e">.numble-control</span>{
+  <span class="pl-c1"><span class="pl-c1">width</span></span>: <span class="pl-c1">27<span class="pl-k">px</span></span>;
+  <span class="pl-c1"><span class="pl-c1">height</span></span>: <span class="pl-c1">21<span class="pl-k">px</span></span>;
+  <span class="pl-c1"><span class="pl-c1">padding</span></span>: <span class="pl-c1">10<span class="pl-k">px</span></span>;
+  <span class="pl-c1"><span class="pl-c1">border</span></span>: <span class="pl-c1">1<span class="pl-k">px</span></span> <span class="pl-c1">solid</span> <span class="pl-c1">#ccc</span>;
+  <span class="pl-c1"><span class="pl-c1">color</span></span>: <span class="pl-c1">#5D8CAE</span>;
+  <span class="pl-c1"><span class="pl-c1">font-family</span></span>: <span class="pl-c1">Arial</span>;
+  <span class="pl-c1"><span class="pl-c1">background-color</span></span>: <span class="pl-c1">#EEEEEE</span>;
+  <span class="pl-c1"><span class="pl-c1">position</span></span>: <span class="pl-c1">relative</span>; <span class="pl-c">/* should probably keep this, the rest can be customized to your liking */</span>
+}
+
+<span class="pl-c">/* These styles are only applicable if includeButtons is set to true */</span>
+<span class="pl-e">.numble-control</span> <span class="pl-e">.numble-arrow</span>{
+  <span class="pl-c1"><span class="pl-c1">position</span></span>: <span class="pl-c1">absolute</span>;
+  <span class="pl-c1"><span class="pl-c1">right</span></span>: <span class="pl-c1">2<span class="pl-k">px</span></span>;
+  <span class="pl-c1"><span class="pl-c1">font-size</span></span>: <span class="pl-c1">0.8<span class="pl-k">em</span></span>;
+  <span class="pl-c1"><span class="pl-c1">cursor</span></span>: <span class="pl-c1">pointer</span>;
+}
+
+<span class="pl-e">.numble-control</span> <span class="pl-e">.numble-increment</span>{
+  <span class="pl-c1"><span class="pl-c1">top</span></span>: <span class="pl-c1">5<span class="pl-k">px</span></span>;
+}
+
+<span class="pl-e">.numble-control</span> <span class="pl-e">.numble-decrement</span>{
+  <span class="pl-c1"><span class="pl-c1">top</span></span>: <span class="pl-c1">20<span class="pl-k">px</span></span>;
+}</pre></div>
+
+<h2>
+<a id="form-posts" class="anchor" href="#form-posts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Form posts</h2>
+
+<p>numble updates the original field with the number as it changes, updates to the form handler should not be required.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jasonyost">jasonyost</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
