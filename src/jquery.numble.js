@@ -17,7 +17,10 @@
 	// Create the defaults once
 	var pluginName = "numble",
 		defaults = {
-			debug: false
+			debug: false,
+			includeButtons: true,
+			allowNegative: true,
+			maxValue: undefined
 		};
 
 	// The actual plugin constructor
@@ -36,16 +39,15 @@
 	// Avoid Plugin.prototype conflicts
 	$.extend(Plugin.prototype, {
 		init: function() {
-			// Place initialization logic here
-			// You already have access to the DOM element and
-			// the options via the instance, e.g. this.element
-			// and this.settings
-			// you can add more functions like the one below and
-			// call them like so: this.yourOtherFunction(this.element, this.settings).
-			this.debugMessage("numble initialized");
-			this.setupControls(this.element, this.settings);
+			var numble = this;
+			numble.debugMessage("numble initialized");
+			numble.setupControls(numble.element, numble.settings);
 		},
 		setupControls: function(element, settings) {
+
+			// Add a wrapper for the control
+			$(element).wrap('<div class="numble-wrapper"></div>');
+
 			var numble = this;
 			// Hide the original control to prevent default browser styling interference
 			$(element).addClass('numble-original');
@@ -57,7 +59,7 @@
 
 			// Display the original value of the control
 			var originalValue = parseInt($(element).val()) || 0;
-			this.debugMessage("original value " + originalValue);
+			numble.debugMessage("original value " + originalValue);
 			control.text(originalValue);
 
 			// bind to change event of the input to update the new control
@@ -65,17 +67,17 @@
 				numble.debugMessage("change detected");
 				var control = $(this).siblings('.numble-control');
 				control.text($(this).val());
-
 				// replace the controls on change
 				numble.addButtons(this, numble.settings);
-
 			});
 
 			// bind the mouse wheel to the control
 			control.bind('mousewheel DOMMouseScroll', function(event) {
 				if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
+					numble.debugMessage('received scroll up event');
 					numble.incrementValue(element);
 				} else {
+					numble.debugMessage('received scroll down event');
 					numble.decrementValue(element);
 				}
 			});
@@ -86,31 +88,52 @@
 		},
 		addButtons: function(element, settings) {
 			var numble = this;
-			var n = $(element).siblings('.numble-control');
-			n.append('<span class="numble-increment numble-arrow">&#x25B2;</span>');
-			n.append('<span class="numble-decrement numble-arrow">&#x25BC;</span>');
+			if(settings.includeButtons){
+				var n = $(element).siblings('.numble-control');
+				n.append('<span class="numble-increment numble-arrow">&#x25B2;</span>');
+				n.append('<span class="numble-decrement numble-arrow">&#x25BC;</span>');
 
-			n.find('.numble-increment').click(function(){
-				numble.incrementValue(element);
-			});
+				n.find('.numble-increment').click(function(){
+					numble.incrementValue(element);
+				});
 
-			n.find('.numble-decrement').click(function(){
-				numble.decrementValue(element);
-			});
+				n.find('.numble-decrement').click(function(){
+					numble.decrementValue(element);
+				});
+			}
 		},
 		incrementValue: function(element) {
-			this.debugMessage('received scroll up event');
 			var val = parseInt($(element).val()) || 0;
-			val++;
-			$(element).val(val).trigger('change');
-			this.debugMessage('incrementing to ' + val);
+			if(this.settings.maxValue){
+				if(val < this.settings.maxValue){
+					val++;
+					$(element).val(val).trigger('change');
+					this.debugMessage('incrementing to ' + val);
+				}else{
+					this.debugMessage('maxValue set to ' + this.settings.maxValue);
+				}
+			}else{
+				val++;
+				$(element).val(val).trigger('change');
+				this.debugMessage('incrementing to ' + val);
+			}
 		},
 		decrementValue: function(element) {
-			this.debugMessage('received scroll down event');
 			var val = parseInt($(element).val()) || 0;
-			val--;
-			$(element).val(val).trigger('change');
-			this.debugMessage('decrementing to ' + val);
+			if(!this.settings.allowNegative){
+				if(val > 0){
+					val--;
+					$(element).val(val).trigger('change');
+					this.debugMessage('decrementing to ' + val);
+				}else{
+					this.debugMessage('allowNegative set to false');
+				}
+			}else{
+				val--;
+				$(element).val(val).trigger('change');
+				this.debugMessage('decrementing to ' + val);
+			}
+
 		},
 		debugMessage: function(message) {
 			if (this.settings.debug) {
