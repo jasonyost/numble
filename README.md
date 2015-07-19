@@ -1,7 +1,8 @@
 # numble
-A simple number input field plugin
+## Description
+numble is a simple jQuery plugin to override the default HTML5 field to facilitate better cross browser styling and consistency.
 
-![build status](https://travis-ci.org/jasonyost/numble.svg)
+[![build status](https://travis-ci.org/jasonyost/numble.svg)](https://travis-ci.org/jasonyost/numble)
 
 ## Installation & Usage
 Download or clone the repo and include the [jquery.numble.min.js](https://raw.githubusercontent.com/jasonyost/numble/master/dist/jquery.numble.min.js) file in your html. numble is a jQuery plugin so be sure it is loaded after jQuery
@@ -26,7 +27,7 @@ $('input[type=number]').numble({
   includeButtons: true, // if set to false up and down arrows won't be added to the control
   allowNegative: true, // if set to false numble won't decrement the value below zero
   maxValue: undefined, // if set numble won't increment value above setting
-  minValue: undefined, // if set numble won't increment the value below setting, a minValue of 0 will have no effect unless allowNegative is set to false
+  minValue: undefined, // if set numble won't decrement the value below setting, a minValue of 0 will have no effect unless allowNegative is set to false
 });
 ```
 

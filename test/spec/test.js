@@ -2,21 +2,24 @@
 	'use strict';
 
 	describe('.numble()', function() {
-		var testInput, control;
+
+		jasmine.getFixtures().fixturesPath = 'test/spec/fixtures';
+
+		var testInput, testControl;
 
 		beforeEach(function() {
-			jasmine.getFixtures().set('<input type="number" class="settings-test" />');
-			testInput = $('.settings-test');
+			loadFixtures('numblefixture.html');
+			testInput = $('.default-test');
 			testInput.numble();
-			control = testInput.siblings('.numble-control');
+			testControl = testInput.siblings('.numble-control');
 		});
 
 		afterEach(function(){
-			$('.settings-test').remove();
+			$('#test-container').remove();
 		});
 
 		describe('init', function() {
-			it('should wrap the original element in a div', function(){
+			it('should wrap the original element in a div.numble-wrapper', function(){
 				expect(testInput.parent()).toBeInDOM();
 				expect(testInput.parent()).toHaveClass('numble-wrapper');
 			});
@@ -29,24 +32,24 @@
 				expect(testInput).toBeHidden();
 			});
 
-			it('should inject a display control into the page', function() {
+			it('should inject a display control into .numble-wrapper', function() {
 				expect(testInput.siblings()).toBeInDOM();
 				expect(testInput.siblings()).toHaveClass('numble-control');
+				expect(testControl.parent()).toHaveClass('numble-wrapper');
 			});
 
 			describe('given an existing numerical value', function() {
 				it('should display the value in the new element', function() {
-					jasmine.getFixtures().set('<input type="number" class="settings-test" value="42"/>');
-					testInput = $('.settings-test');
+					testInput = $('.existing-test');
 					testInput.numble();
-					control = testInput.siblings('.numble-control');
-					expect(control).toContainText('42');
+					testControl = testInput.siblings('.numble-control');
+					expect(testControl).toContainText('42');
 				});
 			});
 
 			describe('given no original value', function() {
 				it('should set the initial number to zero', function() {
-					expect(control).toContainText('0');
+					expect(testControl).toContainText('0');
 				});
 			});
 
@@ -67,37 +70,35 @@
 				});
 			});
 
-			describe('clickable controls', function() {
+		});
 
-				describe('up arrow', function() {
-					it('should add an arrow in the up direction to the control', function() {
-						expect(control).toContainElement('.numble-increment');
-					});
-
-					describe('when clicked', function() {
-						it('should increment the value', function() {
-							control.find('.numble-increment').click();
-							expect(control).toContainText("1");
-						});
-					});
+		describe('addButtons', function() {
+			describe('up arrow', function() {
+				it('should add an arrow in the up direction to the control', function() {
+					expect(testControl).toContainElement('.numble-increment');
 				});
 
-				describe('down arrow', function() {
-					it('should add an arrow in the down direction to the control', function() {
-						expect(control).toContainElement('.numble-decrement');
+				describe('when clicked', function() {
+					it('should increment the value', function() {
+						testControl.find('.numble-increment').click();
+						expect(testControl).toContainText("1");
 					});
+				});
+			});
 
-					describe('when clicked', function() {
-						it('should decrement the value', function() {
-							control.find('.numble-decrement').click();
-							expect(control).toContainText("-1");
-						});
+			describe('down arrow', function() {
+				it('should add an arrow in the down direction to the control', function() {
+					expect(testControl).toContainElement('.numble-decrement');
+				});
+
+				describe('when clicked', function() {
+					it('should decrement the value', function() {
+						testControl.find('.numble-decrement').click();
+						expect(testControl).toContainText("-1");
 					});
-
 				});
 
 			});
-
 		});
 
 		describe('settings', function() {
@@ -115,12 +116,11 @@
 			describe('includeButtons', function() {
 				describe('given the setting of false', function() {
 					it('should not add buttons to the control', function() {
-						jasmine.getFixtures().set('<input type="number" class="settings-test"/>');
 						testInput = $('.settings-test');
 						testInput.numble({includeButtons:false});
-						control = testInput.siblings('.numble-control');
-						expect(control).not.toContainElement('.numble-increment');
-						expect(control).not.toContainElement('.numble-decrement');
+						testControl = testInput.siblings('.numble-control');
+						expect(testControl).not.toContainElement('.numble-increment');
+						expect(testControl).not.toContainElement('.numble-decrement');
 					});
 				});
 			});
@@ -128,9 +128,10 @@
 			describe('allowNegative', function() {
 				describe('given the setting of false', function() {
 					it('should not allow the number to be decremented into a negative', function() {
+						testInput = $('.settings-test');
 						testInput.numble({allowNegative:false});
-						control = testInput.siblings('.numble-control');
-						expect(control).toContainText("0");
+						testControl = testInput.siblings('.numble-control');
+						expect(testControl).toContainText("0");
 					});
 				});
 			});
@@ -138,11 +139,10 @@
 			describe('maxValue', function(){
 				describe('given a maximum value', function(){
 					it('should not allow the number to be incremented past the maxValue', function(){
-						jasmine.getFixtures().set('<input type="number" class="settings-test" value="5"/>');
-						testInput = $('.settings-test');
+						testInput = $('.minmax-val-test');
 						testInput.numble({maxValue:5});
-						control = testInput.siblings('.numble-control');
-						control.find('.numble-increment').click();
+						testControl = testInput.siblings('.numble-control');
+						testControl.find('.numble-increment').click();
 						expect(testInput).toHaveValue("5");
 					});
 				});
@@ -151,11 +151,10 @@
 			describe('minValue', function() {
 				describe('given a maximum value', function() {
 					it('should not allow the number to be decremented into a past the minValue', function() {
-						jasmine.getFixtures().set('<input type="number" class="settings-test" value="5"/>');
-						testInput = $('.settings-test');
+						testInput = $('.minmax-val-test');
 						testInput.numble({minValue:5});
-						control = testInput.siblings('.numble-control');
-						control.find('.numble-decrement').click();
+						testControl = testInput.siblings('.numble-control');
+						testControl.find('.numble-decrement').click();
 						expect(testInput).toHaveValue("5");
 					});
 				});
