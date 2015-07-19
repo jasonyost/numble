@@ -1,6 +1,8 @@
 # numble
 A simple number input field plugin
 
+![build status](https://travis-ci.org/jasonyost/numble.svg)
+
 ## Installation & Usage
 Download or clone the repo and include the [jquery.numble.min.js](https://raw.githubusercontent.com/jasonyost/numble/master/dist/jquery.numble.min.js) file in your html. numble is a jQuery plugin so be sure it is loaded after jQuery
 
