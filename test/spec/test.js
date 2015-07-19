@@ -148,6 +148,19 @@
 				});
 			});
 
+			describe('minValue', function() {
+				describe('given a maximum value', function() {
+					it('should not allow the number to be decremented into a past the minValue', function() {
+						jasmine.getFixtures().set('<input type="number" class="settings-test" value="5"/>');
+						testInput = $('.settings-test');
+						testInput.numble({minValue:5});
+						control = testInput.siblings('.numble-control');
+						control.find('.numble-decrement').click();
+						expect(testInput).toHaveValue("5");
+					});
+				});
+			});
+
 		});
 
 	});

@@ -20,7 +20,8 @@
 			debug: false,
 			includeButtons: true,
 			allowNegative: true,
-			maxValue: undefined
+			maxValue: undefined,
+			minValue: undefined
 		};
 
 	// The actual plugin constructor
@@ -78,7 +79,7 @@
 					numble.incrementValue(element);
 				} else {
 					numble.debugMessage('received scroll down event');
-					numble.decrementValue(element);
+					numble.decrementValue(element, settings);
 				}
 			});
 
@@ -98,7 +99,7 @@
 				});
 
 				n.find('.numble-decrement').click(function(){
-					numble.decrementValue(element);
+					numble.decrementValue(element, settings);
 				});
 			}
 		},
@@ -118,17 +119,32 @@
 				this.debugMessage('incrementing to ' + val);
 			}
 		},
-		decrementValue: function(element) {
+		decrementValue: function(element, settings) {
 			var val = parseInt($(element).val()) || 0;
-			if(!this.settings.allowNegative){
-				if(val > 0){
-					val--;
-					$(element).val(val).trigger('change');
-					this.debugMessage('decrementing to ' + val);
+			// can we decrement?
+			var canDecrement = false;
+
+			if(settings.minValue){
+				if(val > settings.minValue){
+					canDecrement = true;
 				}else{
-					this.debugMessage('allowNegative set to false');
+					canDecrement = false;
+					this.debugMessage('minValue set to ' + settings.minValue);
 				}
 			}else{
+				if(val == 0){
+					if(!settings.allowNegative){
+						canDecrement = false;
+						this.debugMessage('allowNegative set to false');
+					}else{
+						canDecrement = true;
+					}
+				}else{
+					canDecrement = true;
+				}
+			}
+
+			if(canDecrement){
 				val--;
 				$(element).val(val).trigger('change');
 				this.debugMessage('decrementing to ' + val);

@@ -23,7 +23,8 @@ $('input[type=number]').numble({
   debug: false, // if set to true will log console messages from numble
   includeButtons: true, // if set to false up and down arrows won't be added to the control
   allowNegative: true, // if set to false numble won't decrement the value below zero
-  maxValue: undefined // if set numble won't increment value above setting
+  maxValue: undefined, // if set numble won't increment value above setting
+  minValue: undefined, // if set numble won't increment the value below setting, a minValue of 0 will have no effect unless allowNegative is set to false
 });
 ```
 
