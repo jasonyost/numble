@@ -8,13 +8,13 @@
  */
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
-;
+; // jshint ignore:line
 (function($, window, document, undefined) {
 
 	"use strict";
 
 	// undefined is used here as the undefined global variable in ECMAScript 3 is
-	// mutable (ie. it can be changed by someone else). undefined isn't really being
+	// mutable (ie. it can be changed by someone else). undefined isn"t really being
 	// passed in so we can ensure the value of it is truly undefined. In ES5, undefined
 	// can no longer be modified.
 
@@ -28,7 +28,8 @@
 			debug: false,
 			includeButtons: true,
 			allowNegative: true,
-			maxValue: undefined
+			maxValue: undefined,
+			minValue: undefined
 		};
 
 	// The actual plugin constructor
@@ -36,7 +37,7 @@
 		this.element = element;
 		// jQuery has an extend method which merges the contents of two or
 		// more objects, storing the result in the first object. The first object
-		// is generally empty as we don't want to alter the default options for
+		// is generally empty as we don"t want to alter the default options for
 		// future instances of the plugin
 		this.settings = $.extend({}, defaults, options);
 		this._defaults = defaults;
@@ -54,16 +55,16 @@
 		setupControls: function(element, settings) {
 
 			// Add a wrapper for the control
-			$(element).wrap('<div class="numble-wrapper"></div>');
+			$(element).wrap("<div class=\"numble-wrapper\"></div>");
 
 			var numble = this;
 			// Hide the original control to prevent default browser styling interference
-			$(element).addClass('numble-original');
+			$(element).addClass("numble-original");
 			$(element).hide();
 
 			// Inject a new element into the page to handle the display control of the numbers
-			$(element).after('<div class="numble-control"></div>');
-			var control = $(element).siblings('.numble-control');
+			$(element).after("<div class=\"numble-control\"></div>");
+			var control = $(element).siblings(".numble-control");
 
 			// Display the original value of the control
 			var originalValue = parseInt($(element).val()) || 0;
@@ -73,20 +74,20 @@
 			// bind to change event of the input to update the new control
 			$(element).change(function() {
 				numble.debugMessage("change detected");
-				var control = $(this).siblings('.numble-control');
+				var control = $(this).siblings(".numble-control");
 				control.text($(this).val());
 				// replace the controls on change
 				numble.addButtons(this, numble.settings);
 			});
 
 			// bind the mouse wheel to the control
-			control.bind('mousewheel DOMMouseScroll', function(event) {
+			control.bind("mousewheel DOMMouseScroll", function(event) {
 				if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
-					numble.debugMessage('received scroll up event');
+					numble.debugMessage("received scroll up event");
 					numble.incrementValue(element);
 				} else {
-					numble.debugMessage('received scroll down event');
-					numble.decrementValue(element);
+					numble.debugMessage("received scroll down event");
+					numble.decrementValue(element, settings);
 				}
 			});
 
@@ -97,16 +98,16 @@
 		addButtons: function(element, settings) {
 			var numble = this;
 			if(settings.includeButtons){
-				var n = $(element).siblings('.numble-control');
-				n.append('<span class="numble-increment numble-arrow">&#x25B2;</span>');
-				n.append('<span class="numble-decrement numble-arrow">&#x25BC;</span>');
+				var n = $(element).siblings(".numble-control");
+				n.append("<span class=\"numble-increment numble-arrow\">&#x25B2;</span>");
+				n.append("<span class=\"numble-decrement numble-arrow\">&#x25BC;</span>");
 
-				n.find('.numble-increment').click(function(){
+				n.find(".numble-increment").click(function(){
 					numble.incrementValue(element);
 				});
 
-				n.find('.numble-decrement').click(function(){
-					numble.decrementValue(element);
+				n.find(".numble-decrement").click(function(){
+					numble.decrementValue(element, settings);
 				});
 			}
 		},
@@ -115,31 +116,46 @@
 			if(this.settings.maxValue){
 				if(val < this.settings.maxValue){
 					val++;
-					$(element).val(val).trigger('change');
-					this.debugMessage('incrementing to ' + val);
+					$(element).val(val).trigger("change");
+					this.debugMessage("incrementing to " + val);
 				}else{
-					this.debugMessage('maxValue set to ' + this.settings.maxValue);
+					this.debugMessage("maxValue set to " + this.settings.maxValue);
 				}
 			}else{
 				val++;
-				$(element).val(val).trigger('change');
-				this.debugMessage('incrementing to ' + val);
+				$(element).val(val).trigger("change");
+				this.debugMessage("incrementing to " + val);
 			}
 		},
-		decrementValue: function(element) {
+		decrementValue: function(element, settings) {
 			var val = parseInt($(element).val()) || 0;
-			if(!this.settings.allowNegative){
-				if(val > 0){
-					val--;
-					$(element).val(val).trigger('change');
-					this.debugMessage('decrementing to ' + val);
+			// can we decrement?
+			var canDecrement = false;
+
+			if(settings.minValue){
+				if(val > settings.minValue){
+					canDecrement = true;
 				}else{
-					this.debugMessage('allowNegative set to false');
+					canDecrement = false;
+					this.debugMessage("minValue set to " + settings.minValue);
 				}
 			}else{
+				if(val === 0){
+					if(!settings.allowNegative){
+						canDecrement = false;
+						this.debugMessage("allowNegative set to false");
+					}else{
+						canDecrement = true;
+					}
+				}else{
+					canDecrement = true;
+				}
+			}
+
+			if(canDecrement){
 				val--;
-				$(element).val(val).trigger('change');
-				this.debugMessage('decrementing to ' + val);
+				$(element).val(val).trigger("change");
+				this.debugMessage("decrementing to " + val);
 			}
 
 		},
