@@ -34,7 +34,12 @@
           <h1>
 <a id="numble" class="anchor" href="#numble" aria-hidden="true"><span class="octicon octicon-link"></span></a>numble</h1>
 
-<p>A simple number input field plugin</p>
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>numble is a simple jQuery plugin to override the default HTML5 field to facilitate better cross browser styling and consistency. The default number input renders differently in different browsers making it difficult to match styles. numble hides the original control and adds a new element containing the hidden original. The new control allows the number to be changed using either the mouse scroll wheel or embedded increment and decrement controls.</p>
+
+<p><a href="https://travis-ci.org/jasonyost/numble"><img src="https://travis-ci.org/jasonyost/numble.svg" alt="build status"></a></p>
 
 <h2>
 <a id="installation--usage" class="anchor" href="#installation--usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation &amp; Usage</h2>
@@ -58,7 +63,8 @@
   includeButtons<span class="pl-k">:</span> <span class="pl-c1">true</span>, <span class="pl-c">// if set to false up and down arrows won't be added to the control</span>
   allowNegative<span class="pl-k">:</span> <span class="pl-c1">true</span>, <span class="pl-c">// if set to false numble won't decrement the value below zero</span>
   maxValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble won't increment value above setting</span>
-  minValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble won't increment the value below setting, a minValue of 0 will have no effect unless allowNegative is set to false</span>
+  minValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble won't decrement the value below setting, a minValue of 0 will have no effect unless allowNegative is set to false</span>
+  initialValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble will set the initial value of the control to this instead of 0 if the field does not already contain a value</span>
 });</pre></div>
 
 <h2>
@@ -98,9 +104,9 @@
 }</pre></div>
 
 <h2>
-<a id="form-posts" class="anchor" href="#form-posts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Form posts</h2>
+<a id="form-interactions" class="anchor" href="#form-interactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Form interactions</h2>
 
-<p>numble updates the original field with the number as it changes, updates to the form handler should not be required.</p>
+<p>numble updates the original hidden field with the number as it changes, the change event of the field is bound to update the display of the control on change.</p>
         </section>
 
         <footer>
