@@ -6,7 +6,26 @@
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+		<link rel="stylesheet" href="stylesheets/demo.css" media="screen" charset="utf-8">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js" charset="utf-8"></script>
+		<script src="javascripts/jquery.numble.min.js" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$(".default-example").numble();
+				$(".settings-example").numble({minValue:4,maxValue:16,initialValue:8});
+				$(".negative-example").numble({maxValue:8,allowNegative:false});
+				$(".style-example").numble({allowNegative:false});
+				$(".external-example").numble({includeButtons:false});
+
+				$(".external-increment").click(function(){
+					$(".external-example").val("5");
+					$(".external-example").trigger("change");
+				});
+
+			});
+		</script>
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -51,20 +70,49 @@
 
 <p>numble can then be called on the desired input(s)</p>
 
-<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">'</span>input[type=number]<span class="pl-pds">'</span></span>).numble();</pre></div>
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble();</pre></div>
+
+<h4>Minimal Example:</h4>
+
+<p>
+	<input type="number" name="default_example" class="default-example">
+</p>
 
 <h2>
 <a id="parameters" class="anchor" href="#parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameters</h2>
 
 <p>numble accepts the following parameters with defaults listed</p>
 
-<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">'</span>input[type=number]<span class="pl-pds">'</span></span>).numble({
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
   debug<span class="pl-k">:</span> <span class="pl-c1">false</span>, <span class="pl-c">// if set to true will log console messages from numble</span>
   includeButtons<span class="pl-k">:</span> <span class="pl-c1">true</span>, <span class="pl-c">// if set to false up and down arrows won't be added to the control</span>
   allowNegative<span class="pl-k">:</span> <span class="pl-c1">true</span>, <span class="pl-c">// if set to false numble won't decrement the value below zero</span>
   maxValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble won't increment value above setting</span>
   minValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble won't decrement the value below setting, a minValue of 0 will have no effect unless allowNegative is set to false</span>
-  initialValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble will set the initial value of the control to this instead of 0 if the field does not already contain a value</span>
+  initialValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span> <span class="pl-c">// if set numble will set the initial value of the control to this instead of 0</span>
+});</pre></div>
+
+<h4>Min/Max Value, with an initial value</h4>
+
+<p>
+	<input type="number" name="settings_example" class="settings-example">
+</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
+	minValue<span class="pl-k">:</span> <span class="pl-c1">4</span>,
+	maxValue<span class="pl-k">:</span> <span class="pl-c1">16</span>,
+	initialValue<span class="pl-k">:</span> <span class="pl-c1">8</span>
+});</pre></div>
+
+<h4>maxValue no negatives</h4>
+
+<p>
+	<input type="number" name="negative_example" class="negative-example">
+</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
+	allowNegative<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+	maxValue<span class="pl-k">:</span> <span class="pl-c1">8</span>
 });</pre></div>
 
 <h2>
@@ -72,7 +120,10 @@
 
 <p>numble adds a few elements add classes to the page and control. Inline CSS is not added by numble other than to hide the original input, you will need to provide styles for the control in your own stylesheet or use the <a href="https://raw.githubusercontent.com/jasonyost/numble/master/demo/demo.css">demo stylesheet</a>.</p>
 
-<div class="highlight highlight-css"><pre><span class="pl-e">.numble-wrapper</span>{
+
+<div class="highlight highlight-css"><pre>
+<span class="pl-c">/* Default styles shown in demo */</span>
+<span class="pl-e">.numble-wrapper</span>{
   <span class="pl-c">/* contains the original input and the numble control */</span>
 }
 
@@ -103,10 +154,34 @@
   <span class="pl-c1"><span class="pl-c1">top</span></span>: <span class="pl-c1">20<span class="pl-k">px</span></span>;
 }</pre></div>
 
+<h4>Big numble</h4>
+<p class="big">
+	<input type="number" name="bignumble" value="42" class="style-example">
+</p>
+
 <h2>
 <a id="form-interactions" class="anchor" href="#form-interactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Form interactions</h2>
 
 <p>numble updates the original hidden field with the number as it changes, the change event of the field is bound to update the display of the control on change.</p>
+
+<h4>Update numble control externally</h4>
+<p class="external">
+	<input type="number" name="external" class="external-example">
+</p>
+<p>
+	<input type="button" name="name" value="Change Value" class="external-increment">
+</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>.external-example<span class="pl-pds">"</span></span>).numble({
+  includeButtons<span class="pl-k">:</span> <span class="pl-c1">false</span>
+});
+
+$(<span class="pl-s"><span class="pl-pds">"</span>.external-increment<span class="pl-pds">"</span></span>).<span class="pl-e">click</span>(function(){
+  $(<span class="pl-s"><span class="pl-pds">"</span>.external-example<span class="pl-pds">"</span></span>).val(<span class="pl-s"><span class="pl-pds">"</span>5<span class="pl-pds">"</span></span>);
+  $(<span class="pl-s"><span class="pl-pds">"</span>.external-example<span class="pl-pds">"</span></span>).trigger(<span class="pl-s"><span class="pl-pds">"</span>change<span class="pl-pds">"</span></span>);
+});
+</pre></div>
+
         </section>
 
         <footer>
@@ -114,7 +189,7 @@
           This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
-        
+
       </div>
     </div>
   </body>
