@@ -1,0 +1,65 @@
+.test-area{
+  margin-bottom: 20px;
+}
+
+.numble-control{
+  width: 27px;
+  height: 21px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  color: #5D8CAE;
+  font-family: Arial;
+  background-color: #EEEEEE;
+  position: relative;
+}
+
+.numble-control .numble-arrow{
+  position: absolute;
+  right: 2px;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.numble-control .numble-increment{
+  top: 5px;
+}
+
+.numble-control .numble-decrement{
+  top: 20px;
+}
+
+.big .numble-control{
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  color: #5D8CAE;
+  font-family: Arial;
+  background-color: #EEEEEE;
+  position: relative;
+  text-align: center;
+  font-size: 23px;
+}
+
+.big .numble-control .numble-arrow{
+  display: block;
+  width: 50%;
+  text-align: center;
+  top: 50px;
+  border-top: 1px solid rgb(204, 204, 204);
+  font-size: 0.5em;
+}
+
+.big .numble-control .numble-increment{
+  left: 0px;
+}
+
+.big .numble-control .numble-decrement{
+  right: 0;
+  border-top: 1px solid rgb(204, 204, 204);
+  border-left: 1px solid;
+}
+
+.external .numble-control{
+  text-align: center;
+}

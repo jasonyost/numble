@@ -1,87 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+		<link rel="stylesheet" href="stylesheets/demo.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>numble - demo</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="demo.css">
-</head>
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js" charset="utf-8"></script>
+		<script src="javascripts/jquery.numble.min.js" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$(".default-example").numble();
+				$(".settings-example").numble({minValue:4,maxValue:16,initialValue:8});
+				$(".negative-example").numble({maxValue:8,allowNegative:false});
+				$(".style-example").numble({allowNegative:false});
+				$(".external-example").numble({includeButtons:false});
 
-<body>
-	<div class="container-fluid">
-		<header>
-			<div class="row">
-				<nav class="navbar navbar-default">
-					<div class="container-fluid">
-						<!-- Brand and toggle get grouped for better mobile display -->
-						<div class="navbar-header">
-							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-							<a class="navbar-brand" href="#">numble</a>
-						</div>
+				$(".external-increment").click(function(){
+					$(".external-example").val("5");
+					$(".external-example").trigger("change");
+				});
 
-						<!-- Collect the nav links, forms, and other content for toggling -->
-						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-							<ul class="nav navbar-nav navbar-right">
-								<li style="padding-top:10px">
-									<!-- Place this tag where you want the button to render. -->
-<a aria-label="Fork jasonyost/numble on GitHub" data-count-aria-label="# forks on GitHub" data-count-api="/repos/jasonyost/numble#forks_count" data-count-href="/jasonyost/numble/network" data-style="mega" href="https://github.com/jasonyost/numble/fork" class="github-button">Fork</a>
-								</li>
-							</ul>
-						</div>
-						<!-- /.navbar-collapse -->
-					</div>
-					<!-- /.container-fluid -->
-				</nav>
-			</div>
-		</header>
-		<main>
-			<div class="row">
-				<article class="intro">
-					<div class="col-xs-12">
-						<h1>Introduction</h1>
-						<p>
-							numble replaces the default HTML5 number input with an element that is easily stylable across multiple browsers.
-						</p>
-						<!-- <p>
-							numble hides the original control and adds a new control containing the hidden original. The new control allows the number to be changed using either the mouse scroll wheel or embedded increment and decrement controls.
-						</p> -->
-					</div>
-				</article>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<article class="basic-demo">
-						<h2>A basic example</h2>
-					</article>
-				</div>
-			</div>
-		</main>
-	</div>
-	<h1>Super Basic Demos</h1>
-	<div class="defaults">
-		<p>
-			numble with default options, use the scroll wheel or control buttons to increment/decrement the number
-		</p>
-		<input type="number" name="numbletest">
-	</div>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script src="../src/jquery.numble.js"></script>
-	<script>
-		$(function() {
-			$(".defaults > input[type=number]").numble();
-		});
-	</script>
-	<!-- Place this tag right after the last button or just before your close body tag. -->
-	<script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
-</body>
+			});
+		</script>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>numble by jasonyost</title>
+  </head>
 
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>numble</h1>
+          <h2>A simple number input field plugin</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/jasonyost/numble/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/jasonyost/numble/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/jasonyost/numble" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="numble" class="anchor" href="#numble" aria-hidden="true"><span class="octicon octicon-link"></span></a>numble</h1>
+
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>numble is a simple jQuery plugin to override the default HTML5 field to facilitate better cross browser styling and consistency. The default number input renders differently in different browsers making it difficult to match styles. numble hides the original control and adds a new element containing the hidden original. The new control allows the number to be changed using either the mouse scroll wheel or embedded increment and decrement controls.</p>
+
+<p><a href="https://travis-ci.org/jasonyost/numble"><img src="https://travis-ci.org/jasonyost/numble.svg" alt="build status"></a></p>
+
+<h2>
+<a id="installation--usage" class="anchor" href="#installation--usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation &amp; Usage</h2>
+
+<p>Download or clone the repo and include the <a href="https://raw.githubusercontent.com/jasonyost/numble/master/dist/jquery.numble.min.js">jquery.numble.min.js</a> file in your html. numble is a jQuery plugin so be sure it is loaded after jQuery</p>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://code.jquery.com/jquery-2.1.4.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>dist/jquery.numble.min.js<span class="pl-pds">"</span></span> <span class="pl-e">charset</span>=<span class="pl-s"><span class="pl-pds">"</span>utf-8<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<p>numble can then be called on the desired input(s)</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble();</pre></div>
+
+<h4>Minimal Example:</h4>
+
+<p>
+	<input type="number" name="default_example" class="default-example">
+</p>
+
+<h2>
+<a id="parameters" class="anchor" href="#parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameters</h2>
+
+<p>numble accepts the following parameters with defaults listed</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
+  debug<span class="pl-k">:</span> <span class="pl-c1">false</span>, <span class="pl-c">// if set to true will log console messages from numble</span>
+  includeButtons<span class="pl-k">:</span> <span class="pl-c1">true</span>, <span class="pl-c">// if set to false up and down arrows won't be added to the control</span>
+  allowNegative<span class="pl-k">:</span> <span class="pl-c1">true</span>, <span class="pl-c">// if set to false numble won't decrement the value below zero</span>
+  maxValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble won't increment value above setting</span>
+  minValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble won't decrement the value below setting, a minValue of 0 will have no effect unless allowNegative is set to false</span>
+  initialValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span> <span class="pl-c">// if set numble will set the initial value of the control to this instead of 0</span>
+});</pre></div>
+
+<h4>Min/Max Value, with an initial value</h4>
+
+<p>
+	<input type="number" name="settings_example" class="settings-example">
+</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
+	minValue<span class="pl-k">:</span> <span class="pl-c1">4</span>,
+	maxValue<span class="pl-k">:</span> <span class="pl-c1">16</span>,
+	initialValue<span class="pl-k">:</span> <span class="pl-c1">8</span>
+});</pre></div>
+
+<h4>maxValue no negatives</h4>
+
+<p>
+	<input type="number" name="negative_example" class="negative-example">
+</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
+	allowNegative<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+	maxValue<span class="pl-k">:</span> <span class="pl-c1">8</span>
+});</pre></div>
+
+<h2>
+<a id="styling" class="anchor" href="#styling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Styling</h2>
+
+<p>numble adds a few elements add classes to the page and control. Inline CSS is not added by numble other than to hide the original input, you will need to provide styles for the control in your own stylesheet or use the <a href="https://raw.githubusercontent.com/jasonyost/numble/master/demo/demo.css">demo stylesheet</a>.</p>
+
+
+<div class="highlight highlight-css"><pre>
+<span class="pl-c">/* Default styles shown in demo */</span>
+<span class="pl-e">.numble-wrapper</span>{
+  <span class="pl-c">/* contains the original input and the numble control */</span>
+}
+
+<span class="pl-e">.numble-control</span>{
+  <span class="pl-c1"><span class="pl-c1">width</span></span>: <span class="pl-c1">27<span class="pl-k">px</span></span>;
+  <span class="pl-c1"><span class="pl-c1">height</span></span>: <span class="pl-c1">21<span class="pl-k">px</span></span>;
+  <span class="pl-c1"><span class="pl-c1">padding</span></span>: <span class="pl-c1">10<span class="pl-k">px</span></span>;
+  <span class="pl-c1"><span class="pl-c1">border</span></span>: <span class="pl-c1">1<span class="pl-k">px</span></span> <span class="pl-c1">solid</span> <span class="pl-c1">#ccc</span>;
+  <span class="pl-c1"><span class="pl-c1">color</span></span>: <span class="pl-c1">#5D8CAE</span>;
+  <span class="pl-c1"><span class="pl-c1">font-family</span></span>: <span class="pl-c1">Arial</span>;
+  <span class="pl-c1"><span class="pl-c1">background-color</span></span>: <span class="pl-c1">#EEEEEE</span>;
+  <span class="pl-c1"><span class="pl-c1">position</span></span>: <span class="pl-c1">relative</span>; <span class="pl-c">/* should probably keep this, the rest can be customized to your liking */</span>
+}
+
+<span class="pl-c">/* These styles are only applicable if includeButtons is set to true */</span>
+<span class="pl-e">.numble-control</span> <span class="pl-e">.numble-arrow</span>{
+  <span class="pl-c1"><span class="pl-c1">position</span></span>: <span class="pl-c1">absolute</span>;
+  <span class="pl-c1"><span class="pl-c1">right</span></span>: <span class="pl-c1">2<span class="pl-k">px</span></span>;
+  <span class="pl-c1"><span class="pl-c1">font-size</span></span>: <span class="pl-c1">0.8<span class="pl-k">em</span></span>;
+  <span class="pl-c1"><span class="pl-c1">cursor</span></span>: <span class="pl-c1">pointer</span>;
+}
+
+<span class="pl-e">.numble-control</span> <span class="pl-e">.numble-increment</span>{
+  <span class="pl-c1"><span class="pl-c1">top</span></span>: <span class="pl-c1">5<span class="pl-k">px</span></span>;
+}
+
+<span class="pl-e">.numble-control</span> <span class="pl-e">.numble-decrement</span>{
+  <span class="pl-c1"><span class="pl-c1">top</span></span>: <span class="pl-c1">20<span class="pl-k">px</span></span>;
+}</pre></div>
+
+<h4>Big numble</h4>
+<p class="big">
+	<input type="number" name="bignumble" value="42" class="style-example">
+</p>
+
+<h2>
+<a id="form-interactions" class="anchor" href="#form-interactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Form interactions</h2>
+
+<p>numble updates the original hidden field with the number as it changes, the change event of the field is bound to update the display of the control on change.</p>
+
+<h4>Update numble control externally</h4>
+<p class="external">
+	<input type="number" name="external" class="external-example">
+</p>
+<p>
+	<input type="button" name="name" value="Change Value" class="external-increment">
+</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>.external-example<span class="pl-pds">"</span></span>).numble({
+  includeButtons<span class="pl-k">:</span> <span class="pl-c1">false</span>
+});
+
+$(<span class="pl-s"><span class="pl-pds">"</span>.external-increment<span class="pl-pds">"</span></span>).<span class="pl-e">click</span>(function(){
+  $(<span class="pl-s"><span class="pl-pds">"</span>.external-example<span class="pl-pds">"</span></span>).val(<span class="pl-s"><span class="pl-pds">"</span>5<span class="pl-pds">"</span></span>);
+  $(<span class="pl-s"><span class="pl-pds">"</span>.external-example<span class="pl-pds">"</span></span>).trigger(<span class="pl-s"><span class="pl-pds">"</span>change<span class="pl-pds">"</span></span>);
+});
+</pre></div>
+
+        </section>
+
+        <footer>
+          numble is maintained by <a href="https://github.com/jasonyost">jasonyost</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+
+      </div>
+    </div>
+  </body>
 </html>
