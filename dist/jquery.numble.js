@@ -83,14 +83,15 @@
 			$(element).change();
 
 			// bind the mouse wheel to the control
-			control.bind("mousewheel DOMMouseScroll", function(event) {
-				if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
+			control.bind("mousewheel DOMMouseScroll", function(e) {
+				if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
 					numble.debugMessage("received scroll up event");
 					numble.incrementValue(element);
 				} else {
 					numble.debugMessage("received scroll down event");
 					numble.decrementValue(element, settings);
 				}
+				e.preventDefault();
 			});
 
 			// add up and down arrows

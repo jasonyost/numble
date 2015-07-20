@@ -39,8 +39,10 @@ module.exports = function(grunt) {
 		// Minify definitions
 		uglify: {
 			my_target: {
-				src: ["dist/jquery.numble.js"],
-				dest: "dist/jquery.numble.min.js"
+				files: {
+        	"dist/jquery.numble.min.js": ["src/jquery.numble.js"],
+					"demo/javascripts/jquery.numble.min.js": ["src/jquery.numble.js"]
+      	}
 			},
 			options: {
 				banner: "<%= meta.banner %>"
