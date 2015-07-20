@@ -1,6 +1,6 @@
 # numble
 ## Description
-numble is a simple jQuery plugin to override the default HTML5 field to facilitate better cross browser styling and consistency.
+numble is a simple jQuery plugin to override the default HTML5 field to facilitate better cross browser styling and consistency. The default number input renders differently in different browsers making it difficult to match styles. numble hides the original control and adds a new element containing the hidden original. The new control allows the number to be changed using either the mouse scroll wheel or embedded increment and decrement controls.
 
 [![build status](https://travis-ci.org/jasonyost/numble.svg)](https://travis-ci.org/jasonyost/numble)
 
@@ -68,5 +68,5 @@ numble adds a few elements add classes to the page and control. Inline CSS is no
 }
 ```
 
-## Form posts
-numble updates the original field with the number as it changes, updates to the form handler should not be required.
+## Form interactions
+numble updates the original hidden field with the number as it changes, the change event of the field is bound to update the display of the control on change.

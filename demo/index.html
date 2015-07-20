@@ -1,24 +1,87 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>numble - demo</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="../src/jquery.numble.js"></script>
-		<link rel="stylesheet" href="demo.css">
-	</head>
-	<body>
-		<h1>Super Basic Demos</h1>
-		<div class="defaults">
-			<p>
-				numble with default options, use the scroll wheel or control buttons to increment/decrement the number
-			</p>
-			<input type="number" name="numbletest">
-		</div>
-		<script>
-			$(function() {
-				$(".defaults > input[type=number]").numble();
-			});
-		</script>
-	</body>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>numble - demo</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="demo.css">
+</head>
+
+<body>
+	<div class="container-fluid">
+		<header>
+			<div class="row">
+				<nav class="navbar navbar-default">
+					<div class="container-fluid">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="#">numble</a>
+						</div>
+
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav navbar-right">
+								<li style="padding-top:10px">
+									<!-- Place this tag where you want the button to render. -->
+<a aria-label="Fork jasonyost/numble on GitHub" data-count-aria-label="# forks on GitHub" data-count-api="/repos/jasonyost/numble#forks_count" data-count-href="/jasonyost/numble/network" data-style="mega" href="https://github.com/jasonyost/numble/fork" class="github-button">Fork</a>
+								</li>
+							</ul>
+						</div>
+						<!-- /.navbar-collapse -->
+					</div>
+					<!-- /.container-fluid -->
+				</nav>
+			</div>
+		</header>
+		<main>
+			<div class="row">
+				<article class="intro">
+					<div class="col-xs-12">
+						<h1>Introduction</h1>
+						<p>
+							numble replaces the default HTML5 number input with an element that is easily stylable across multiple browsers.
+						</p>
+						<!-- <p>
+							numble hides the original control and adds a new control containing the hidden original. The new control allows the number to be changed using either the mouse scroll wheel or embedded increment and decrement controls.
+						</p> -->
+					</div>
+				</article>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<article class="basic-demo">
+						<h2>A basic example</h2>
+					</article>
+				</div>
+			</div>
+		</main>
+	</div>
+	<h1>Super Basic Demos</h1>
+	<div class="defaults">
+		<p>
+			numble with default options, use the scroll wheel or control buttons to increment/decrement the number
+		</p>
+		<input type="number" name="numbletest">
+	</div>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="../src/jquery.numble.js"></script>
+	<script>
+		$(function() {
+			$(".defaults > input[type=number]").numble();
+		});
+	</script>
+	<!-- Place this tag right after the last button or just before your close body tag. -->
+	<script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+</body>
+
 </html>
