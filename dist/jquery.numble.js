@@ -8,8 +8,7 @@
  */
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
-; // jshint ignore:line
-(function($, window, document, undefined) {
+;(function($, window, document, undefined) {
 
 	"use strict";
 
@@ -44,6 +43,12 @@
 		this._defaults = defaults;
 		this._name = pluginName;
 		this.init();
+
+		return {
+			test: function(){
+				console.log("test function called");
+			}
+		};
 	}
 
 	// Avoid Plugin.prototype conflicts
@@ -51,39 +56,44 @@
 		init: function() {
 			var numble = this;
 			numble.debugMessage("numble initialized");
-			numble.setupControls(numble.element, numble.settings);
+			numble.initDom(numble.element, numble.settings);
+			numble.bindElementChange(numble.element, numble.settings);
+			numble.bindNumbleScroll(numble.element, numble.settings);
+			numble.initValue(numble.element, numble.settings);
 		},
-		setupControls: function(element, settings) {
+		initDom: function(element){
 
 			// Add a wrapper for the control
+			// TODO allow additional classes to be added to the wrapper
+			// TODO add index to wrapper to differentiate multiple controls
 			$(element).wrap("<div class=\"numble-wrapper\"></div>");
 
-			var numble = this;
 			// Hide the original control to prevent default browser styling interference
 			$(element).addClass("numble-original");
 			$(element).hide();
 
 			// Inject a new element into the page to handle the display control of the numbers
 			$(element).after("<div class=\"numble-control\"></div>");
-			var control = $(element).siblings(".numble-control");
 
+		},
+		bindElementChange: function(element, settings){
+			var numble = this;
+			var control = numble.getNumbleControl(element);
 			// bind to change event of the input to update the new control
 			$(element).change(function() {
 				numble.debugMessage("change detected: " + $(this).val());
-				var control = $(this).siblings(".numble-control");
 				control.text($(this).val());
 				// replace the controls on change
-				numble.addButtons(this, numble.settings);
+				numble.addButtons(this, settings);
 			});
-
-			// Display the original value of the control
-			var originalValue = this.getIntialValue(element, settings);
-			numble.debugMessage("original value " + originalValue);
-			$(element).val(originalValue);
-			$(element).change();
+		},
+		bindNumbleScroll: function(element, settings){
+			var numble = this;
+			var control = numble.getNumbleControl(element);
 
 			// bind the mouse wheel to the control
 			control.bind("mousewheel DOMMouseScroll", function(e) {
+				numble.debugMessage("received scroll event");
 				if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
 					numble.debugMessage("received scroll up event");
 					numble.incrementValue(element);
@@ -93,10 +103,18 @@
 				}
 				e.preventDefault();
 			});
+		},
+		initValue: function(element, settings){
+			var numble = this;
 
-			// add up and down arrows
-			this.addButtons(this.element, this.settings);
-
+			// Display the original value of the control
+			var originalValue = this.getIntialValue(element, settings);
+			numble.debugMessage("original value " + originalValue);
+			$(element).val(originalValue);
+			$(element).change();
+		},
+		getNumbleControl: function(element){
+			return $(element).siblings(".numble-control");
 		},
 		addButtons: function(element, settings) {
 			var numble = this;
@@ -114,51 +132,50 @@
 				});
 			}
 		},
-		incrementValue: function(element) {
-			var val = parseInt($(element).val()) || 0;
-			if(this.settings.maxValue){
-				if(val < this.settings.maxValue){
-					val++;
-					$(element).val(val).trigger("change");
-					this.debugMessage("incrementing to " + val);
-				}else{
-					this.debugMessage("maxValue set to " + this.settings.maxValue);
-				}
-			}else{
-				val++;
-				$(element).val(val).trigger("change");
-				this.debugMessage("incrementing to " + val);
+		canIncrement: function(current_val, settings){
+			if(settings.maxValue && current_val < settings.maxValue){
+				return true;
+			}
+			if(!settings.maxValue){
+				return true;
 			}
 		},
-		decrementValue: function(element, settings) {
-			var val = parseInt($(element).val()) || 0;
-			// can we decrement?
-			var canDecrement = false;
+		incrementValue: function(element) {
+			var numble = this;
+			var current_val = parseInt($(element).val());
 
-			if(settings.minValue){
-				if(val > settings.minValue){
-					canDecrement = true;
-				}else{
-					canDecrement = false;
-					this.debugMessage("minValue set to " + settings.minValue);
-				}
+			if(numble.canIncrement(current_val, numble.settings)){
+				current_val++;
+				$(element).val(current_val).trigger("change");
+				this.debugMessage("incrementing to " + current_val);
 			}else{
-				if(val === 0){
-					if(!settings.allowNegative){
-						canDecrement = false;
-						this.debugMessage("allowNegative set to false");
-					}else{
-						canDecrement = true;
-					}
-				}else{
-					canDecrement = true;
+				this.debugMessage("maxValue set to " + this.settings.maxValue);
+			}
+		},
+		canDecrement: function(current_val, settings){
+			if(settings.minValue){
+				// a min value has been defined
+				if(current_val >= settings.minValue){
+					// cannot decrement
+					return {can: false, message: "minValue set to " + settings.minValue};
 				}
 			}
+			if(current_val === 0 && settings.allowNegative === false){
+				return {can: false, message: "allowNegative set to false"};
+			}
+			return {can:true};
+		},
+		decrementValue: function(element, settings) {
+			var numble = this;
+			var current_val = parseInt($(element).val());
 
-			if(canDecrement){
-				val--;
-				$(element).val(val).trigger("change");
-				this.debugMessage("decrementing to " + val);
+			var resp = numble.canDecrement(current_val, settings);
+			if(resp.can){
+				current_val--;
+				$(element).val(current_val).trigger("change");
+				this.debugMessage("decrementing to " + current_val);
+			}else{
+				this.debugMessage(resp.message);
 			}
 
 		},
@@ -173,7 +190,7 @@
 			if (this.settings.debug) {
 				console.log(message);
 			}
-		}
+		},
 	});
 
 	// A really lightweight plugin wrapper around the constructor,

@@ -40,7 +40,7 @@
 			test: function(){
 				console.log("test function called");
 			}
-		}
+		};
 	}
 
 	// Avoid Plugin.prototype conflicts
@@ -53,8 +53,7 @@
 			numble.bindNumbleScroll(numble.element, numble.settings);
 			numble.initValue(numble.element, numble.settings);
 		},
-		initDom: function(element, settings){
-			var numble = this
+		initDom: function(element){
 
 			// Add a wrapper for the control
 			// TODO allow additional classes to be added to the wrapper
@@ -86,7 +85,7 @@
 
 			// bind the mouse wheel to the control
 			control.bind("mousewheel DOMMouseScroll", function(e) {
-				numble.debugMessage("received scroll event")
+				numble.debugMessage("received scroll event");
 				if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
 					numble.debugMessage("received scroll up event");
 					numble.incrementValue(element);
@@ -126,8 +125,6 @@
 			}
 		},
 		canIncrement: function(current_val, settings){
-			var numble = this
-
 			if(settings.maxValue && current_val < settings.maxValue){
 				return true;
 			}
