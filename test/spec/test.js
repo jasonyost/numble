@@ -183,6 +183,22 @@
 						});
 					});
 				});
+			});
+
+			describe("allowScroll", function(){
+				describe("given a value of false", function(){
+					it("should not bind the control to a scroll event", function(){
+						var scrollEvent = spyOnEvent(testControl, 'DOMMouseScroll');
+						var e = jQuery.Event( "DOMMouseScroll",{originalEvent: {detail:-1}, type: "DOMMouseScroll", which: 1, target: testInput, currentTarget: testInput} );
+
+						testInput = $('.settings-test');
+						testInput.numble({allowScroll:false});
+						testControl = testInput.siblings('.numble-control');
+            testControl.trigger(e);
+            expect("DOMMouseScroll").not.toHaveBeenTriggeredOn(testControl);
+            expect(scrollEvent).not.toHaveBeenTriggered();
+					})
+				})
 			})
 
 		});

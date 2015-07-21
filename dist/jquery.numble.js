@@ -29,7 +29,8 @@
 			allowNegative: true,
 			maxValue: undefined,
 			minValue: undefined,
-			initialValue: undefined
+			initialValue: undefined,
+			allowScroll: true
 		};
 
 	// The actual plugin constructor
@@ -92,17 +93,19 @@
 			var control = numble.getNumbleControl(element);
 
 			// bind the mouse wheel to the control
-			control.bind("mousewheel DOMMouseScroll", function(e) {
-				numble.debugMessage("received scroll event");
-				if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
-					numble.debugMessage("received scroll up event");
-					numble.incrementValue(element);
-				} else {
-					numble.debugMessage("received scroll down event");
-					numble.decrementValue(element, settings);
-				}
-				e.preventDefault();
-			});
+			if(settings.allowScroll){
+				control.bind("mousewheel DOMMouseScroll", function(e) {
+					numble.debugMessage("received scroll event");
+					if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+						numble.debugMessage("received scroll up event");
+						numble.incrementValue(element);
+					} else {
+						numble.debugMessage("received scroll down event");
+						numble.decrementValue(element, settings);
+					}
+					e.preventDefault();
+				});
+			}
 		},
 		initValue: function(element, settings){
 			var numble = this;
