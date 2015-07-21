@@ -82,7 +82,6 @@
 					it('should increment the value', function() {
 						testControl.find('.numble-increment').click();
 						expect(testControl).toContainText("1");
-						pending("Test failing but shouldn't functionality is as expected")
 					});
 				});
 			});
@@ -96,7 +95,6 @@
 					it('should decrement the value', function() {
 						testControl.find('.numble-decrement').click();
 						expect(testControl).toContainText("-1");
-						pending("Test failing but shouldn't functionality is as expected");
 					});
 				});
 

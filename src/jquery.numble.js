@@ -1,7 +1,6 @@
 // the semi-colon before function invocation is a safety net against concatenated
 // scripts and/or other plugins which may not be closed properly.
-; // jshint ignore:line
-(function($, window, document, undefined) {
+;(function($, window, document, undefined) {
 
 	"use strict";
 
@@ -36,6 +35,7 @@
 		this._defaults = defaults;
 		this._name = pluginName;
 		this.init();
+
 	}
 
 	// Avoid Plugin.prototype conflicts
@@ -45,6 +45,7 @@
 			numble.debugMessage("numble initialized");
 			numble.setupControls(numble.element, numble.settings);
 		},
+
 		setupControls: function(element, settings) {
 
 			// Add a wrapper for the control
@@ -87,7 +88,7 @@
 			});
 
 			// add up and down arrows
-			this.addButtons(this.element, this.settings);
+			// this.addButtons(this.element, this.settings);
 
 		},
 		addButtons: function(element, settings) {
@@ -165,7 +166,7 @@
 			if (this.settings.debug) {
 				console.log(message);
 			}
-		}
+		},
 	});
 
 	// A really lightweight plugin wrapper around the constructor,
