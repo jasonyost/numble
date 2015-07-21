@@ -78,4 +78,4 @@ numble adds a few elements add classes to the page and control. Inline CSS is no
 numble updates the original hidden field with the number as it changes, the change event of the field is bound to update the display of the control on change.
 
 ## Thanks
-Based on the excellent [jquery-boilerplate/jquery-boilerplate](jquery-boilerplate/jquery-boilerplate)
+Based on the excellent [jquery-boilerplate/jquery-boilerplate](https://github.com/jquery-boilerplate/jquery-boilerplate)
