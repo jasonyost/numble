@@ -36,6 +36,11 @@
 		this._name = pluginName;
 		this.init();
 
+		return {
+			test: function(){
+				console.log("test function called");
+			}
+		}
 	}
 
 	// Avoid Plugin.prototype conflicts
@@ -43,37 +48,41 @@
 		init: function() {
 			var numble = this;
 			numble.debugMessage("numble initialized");
-			numble.setupControls(numble.element, numble.settings);
+			numble.initDom(numble.element, numble.settings);
+			numble.bindElementChange(numble.element, numble.settings);
+			numble.bindNumbleScroll(numble.element, numble.settings);
+			numble.initValue(numble.element, numble.settings);
 		},
-
-		setupControls: function(element, settings) {
+		initDom: function(element, settings){
+			var numble = this
 
 			// Add a wrapper for the control
+			// TODO allow additional classes to be added to the wrapper
+			// TODO add index to wrapper to differentiate multiple controls
 			$(element).wrap("<div class=\"numble-wrapper\"></div>");
 
-			var numble = this;
 			// Hide the original control to prevent default browser styling interference
 			$(element).addClass("numble-original");
 			$(element).hide();
 
 			// Inject a new element into the page to handle the display control of the numbers
 			$(element).after("<div class=\"numble-control\"></div>");
-			var control = $(element).siblings(".numble-control");
 
+		},
+		bindElementChange: function(element, settings){
+			var numble = this;
+			var control = numble.getNumbleControl(element);
 			// bind to change event of the input to update the new control
 			$(element).change(function() {
 				numble.debugMessage("change detected: " + $(this).val());
-				var control = $(this).siblings(".numble-control");
 				control.text($(this).val());
 				// replace the controls on change
-				numble.addButtons(this, numble.settings);
+				numble.addButtons(this, settings);
 			});
-
-			// Display the original value of the control
-			var originalValue = this.getIntialValue(element, settings);
-			numble.debugMessage("original value " + originalValue);
-			$(element).val(originalValue);
-			$(element).change();
+		},
+		bindNumbleScroll: function(element, settings){
+			var numble = this;
+			var control = numble.getNumbleControl(element);
 
 			// bind the mouse wheel to the control
 			control.bind("mousewheel DOMMouseScroll", function(e) {
@@ -87,10 +96,18 @@
 				}
 				e.preventDefault();
 			});
+		},
+		initValue: function(element, settings){
+			var numble = this;
 
-			// add up and down arrows
-			// this.addButtons(this.element, this.settings);
-
+			// Display the original value of the control
+			var originalValue = this.getIntialValue(element, settings);
+			numble.debugMessage("original value " + originalValue);
+			$(element).val(originalValue);
+			$(element).change();
+		},
+		getNumbleControl: function(element){
+			return $(element).siblings(".numble-control");
 		},
 		addButtons: function(element, settings) {
 			var numble = this;
@@ -108,20 +125,26 @@
 				});
 			}
 		},
+		canIncrement: function(current_val, settings){
+			var numble = this
+
+			if(settings.maxValue && current_val < settings.maxValue){
+				return true;
+			}
+			if(!settings.maxValue){
+				return true;
+			}
+		},
 		incrementValue: function(element) {
-			var val = parseInt($(element).val()) || 0;
-			if(this.settings.maxValue){
-				if(val < this.settings.maxValue){
-					val++;
-					$(element).val(val).trigger("change");
-					this.debugMessage("incrementing to " + val);
-				}else{
-					this.debugMessage("maxValue set to " + this.settings.maxValue);
-				}
+			var numble = this;
+			var current_val = parseInt($(element).val());
+
+			if(numble.canIncrement(current_val, numble.settings)){
+				current_val++;
+				$(element).val(current_val).trigger("change");
+				this.debugMessage("incrementing to " + current_val);
 			}else{
-				val++;
-				$(element).val(val).trigger("change");
-				this.debugMessage("incrementing to " + val);
+				this.debugMessage("maxValue set to " + this.settings.maxValue);
 			}
 		},
 		decrementValue: function(element, settings) {
