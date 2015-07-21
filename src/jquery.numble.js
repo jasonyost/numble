@@ -77,6 +77,7 @@
 
 			// bind the mouse wheel to the control
 			control.bind("mousewheel DOMMouseScroll", function(e) {
+				numble.debugMessage("received scroll event")
 				if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
 					numble.debugMessage("received scroll up event");
 					numble.incrementValue(element);

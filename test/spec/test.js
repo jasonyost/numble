@@ -59,17 +59,26 @@
 
 				describe('in Firefox', function() {
 					it('should bind the element to the DOMMouseScroll event', function() {
-						pending('Code works, only test is pending');
+						var scrollEvent = spyOnEvent(testControl, 'DOMMouseScroll');
+						var e = jQuery.Event( "DOMMouseScroll",{originalEvent: {detail:-1}, type: "DOMMouseScroll", which: 1, target: testInput, currentTarget: testInput} );
+
+            testControl.trigger(e);
+            expect("DOMMouseScroll").toHaveBeenTriggeredOn(testControl);
+            expect(scrollEvent).toHaveBeenTriggered();
 					});
 				});
 
 				describe('in Webkit', function() {
 					it('should bind to the mousewheel event', function() {
-						pending('Code works, only test is pending');
+						var scrollEvent = spyOnEvent(testControl, 'mousewheel');
+						var e = jQuery.Event( "mousewheel",{originalEvent: {wheelDelta:1}, type: "mousewheel", which: 1, target: testInput, currentTarget: testInput} );
+
+            testControl.trigger(e);
+            expect("mousewheel").toHaveBeenTriggeredOn(testControl);
+            expect(scrollEvent).toHaveBeenTriggered();
 					});
 				});
 			});
-
 		});
 
 		describe('addButtons', function() {
@@ -106,8 +115,8 @@
 			describe('debug', function() {
 				describe('given the default setting of true', function() {
 					it('should log console messages', function() {
-						spyOn(console, 'log');
-						expect(console.log).toHaveBeenCalledWith('numble initialized');
+						var e = jasmine.createSpy(console.log);
+						expect(e).toHaveBeenCalled();
 						pending("Test is not working");
 					});
 				});
