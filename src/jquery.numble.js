@@ -147,35 +147,30 @@
 				this.debugMessage("maxValue set to " + this.settings.maxValue);
 			}
 		},
-		decrementValue: function(element, settings) {
-			var val = parseInt($(element).val()) || 0;
-			// can we decrement?
-			var canDecrement = false;
-
+		canDecrement: function(current_val, settings){
 			if(settings.minValue){
-				if(val > settings.minValue){
-					canDecrement = true;
-				}else{
-					canDecrement = false;
-					this.debugMessage("minValue set to " + settings.minValue);
-				}
-			}else{
-				if(val === 0){
-					if(!settings.allowNegative){
-						canDecrement = false;
-						this.debugMessage("allowNegative set to false");
-					}else{
-						canDecrement = true;
-					}
-				}else{
-					canDecrement = true;
+				// a min value has been defined
+				if(current_val >= settings.minValue){
+					// cannot decrement
+					return {can: false, message: "minValue set to " + settings.minValue};
 				}
 			}
+			if(current_val === 0 && settings.allowNegative === false){
+				return {can: false, message: "allowNegative set to false"};
+			}
+			return {can:true};
+		},
+		decrementValue: function(element, settings) {
+			var numble = this;
+			var current_val = parseInt($(element).val());
 
-			if(canDecrement){
-				val--;
-				$(element).val(val).trigger("change");
-				this.debugMessage("decrementing to " + val);
+			var resp = numble.canDecrement(current_val, settings);
+			if(resp.can){
+				current_val--;
+				$(element).val(current_val).trigger("change");
+				this.debugMessage("decrementing to " + current_val);
+			}else{
+				this.debugMessage(resp.message);
 			}
 
 		},

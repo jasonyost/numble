@@ -140,6 +140,8 @@
 						testInput = $('.settings-test');
 						testInput.numble({allowNegative:false});
 						testControl = testInput.siblings('.numble-control');
+						testControl = testInput.siblings('.numble-control');
+						testControl.find('.numble-decrement').click();
 						expect(testControl).toContainText("0");
 					});
 				});
