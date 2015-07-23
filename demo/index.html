@@ -18,6 +18,7 @@
 				$(".negative-example").numble({maxValue:8,allowNegative:false});
 				$(".style-example").numble({allowNegative:false});
 				$(".external-example").numble({includeButtons:false});
+        $(".text-example").numble({incrementText:"&#43;",decrementText:"&#45;"});
 
 				$(".external-increment").click(function(){
 					$(".external-example").val("5");
@@ -89,7 +90,10 @@
   allowNegative<span class="pl-k">:</span> <span class="pl-c1">true</span>, <span class="pl-c">// if set to false numble won't decrement the value below zero</span>
   maxValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble won't increment value above setting</span>
   minValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble won't decrement the value below setting, a minValue of 0 will have no effect unless allowNegative is set to false</span>
-  initialValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span> <span class="pl-c">// if set numble will set the initial value of the control to this instead of 0</span>
+  initialValue<span class="pl-k">:</span> <span class="pl-c1">undefined</span>, <span class="pl-c">// if set numble will set the initial value of the control to this instead of 0</span>
+  allowScroll<span class="pl-k">:</span> <span class="pl-c1">true</span> <span class="pl-c">// if set to false numble will not bind to the mouse wheel event</span>
+  incrementText<span class="pl-k">:</span> <span class="pl-c1">&#x25B2;</span> <span class="pl-c">// numble will display this text for increment</span>
+  decrementText<span class="pl-k">:</span> <span class="pl-c1">&#x25BC;</span> <span class="pl-c">// numble will display this text for decrement</span>
 });</pre></div>
 
 <h4>Min/Max Value, with an initial value</h4>
@@ -158,6 +162,16 @@
 <p class="big">
 	<input type="number" name="bignumble" value="42" class="style-example">
 </p>
+
+<h4>Custom increment/decrement text</h4>
+<p class="big">
+	<input type="number" name="customnumble" value="5" class="text-example">
+</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
+  incrementText<span class="pl-k">:</span> <span class="pl-c1">"&#43;"</span>,
+  decrementText<span class="pl-k">:</span> <span class="pl-c1">"&#45;"</span>
+});</pre></div>
 
 <h2>
 <a id="form-interactions" class="anchor" href="#form-interactions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Form interactions</h2>

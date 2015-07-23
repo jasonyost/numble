@@ -22,7 +22,9 @@
 			maxValue: undefined,
 			minValue: undefined,
 			initialValue: undefined,
-			allowScroll: true
+			allowScroll: true,
+			incrementText: "&#x25B2;",
+			decrementText: "&#x25BC;"
 		};
 
 	// The actual plugin constructor
@@ -115,8 +117,8 @@
 			var numble = this;
 			if(settings.includeButtons){
 				var n = $(element).siblings(".numble-control");
-				n.append("<span class=\"numble-increment numble-arrow\">&#x25B2;</span>");
-				n.append("<span class=\"numble-decrement numble-arrow\">&#x25BC;</span>");
+				n.append("<span class=\"numble-increment numble-arrow\">"+ settings.incrementText +"</span>");
+				n.append("<span class=\"numble-decrement numble-arrow\">"+ settings.decrementText +"</span>");
 
 				n.find(".numble-increment").click(function(){
 					numble.incrementValue(element);

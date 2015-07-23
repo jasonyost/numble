@@ -199,7 +199,43 @@
             expect(scrollEvent).not.toHaveBeenTriggered();
 					})
 				})
-			})
+			});
+
+			describe("incrementText", function(){
+				describe("given the default value of &#x25B2;", function(){
+					it("should dispay the default value", function(){
+						expect(testControl.find(".numble-increment")).toHaveHtml("&#x25B2;");
+					});
+				});
+
+				describe("given an alternate value", function(){
+					it("should display the alternate value", function(){
+						testInput = $('.settings-test');
+						testInput.numble({incrementText:"up"});
+						testControl = testInput.siblings('.numble-control');
+						expect(testControl.find(".numble-increment")).not.toContainHtml("&#x25B2;");
+						expect(testControl.find(".numble-increment")).toContainHtml("up");
+					});
+				});
+			});
+
+			describe("decrementText", function(){
+				describe("given a default value of &#x25BC;", function(){
+					it("should display the default value", function(){
+						expect(testControl.find(".numble-decrement")).toHaveHtml("&#x25BC;");
+					});
+				});
+
+				describe("given an alternate value", function(){
+					it("should display the alternate value", function(){
+						testInput = $('.settings-test');
+						testInput.numble({decrementText:"down"});
+						testControl = testInput.siblings('.numble-control');
+						expect(testControl.find(".numble-decrement")).not.toContainHtml("&#x25BC;");
+						expect(testControl.find(".numble-decrement")).toContainHtml("down");
+					});
+				});
+			});
 
 		});
 
