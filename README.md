@@ -36,7 +36,7 @@ $('input[type=number]').numble({
   maxValue: undefined, // if set numble won't increment value above setting
   minValue: undefined, // if set numble won't decrement the value below setting, a minValue of 0 will have no effect unless allowNegative is set to false
   initialValue: undefined, // if set numble will set the initial value of the control to this instead of 0 if the field does not already contain a value
-  allowScrtoll: true, // if set to false numble won't bind to the mouse scroll event.
+  allowScroll: true, // if set to false numble won't bind to the mouse scroll event.
   incrementText: "&#x25B2;", // numble will display this text for increment
   decrementText: "&#x25BC;" // numble will display this text for decrement
 });
