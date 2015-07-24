@@ -257,6 +257,17 @@
 
 		});
 
+		describe("allowEdit", function(){
+			describe("given a value of false", function(){
+				it("should not set .numble-control to contenteditable", function(){
+					testInput = $('.settings-test');
+					testInput.numble({allowEdit:false});
+					testControl = testInput.siblings('.numble-control');
+					expect(testControl).not.toHaveAttr("contenteditable");
+				});
+			});
+		});
+
 	});
 
 })();

@@ -1,5 +1,5 @@
 /*
- *  numble - v0.0.17
+ *  numble - v0.1.0
  *  Simple jQuery number selector
  *  https://github.com/jasonyost/numble#readme
  *
@@ -32,7 +32,8 @@
 			initialValue: undefined,
 			allowScroll: true,
 			incrementText: "&#x25B2;",
-			decrementText: "&#x25BC;"
+			decrementText: "&#x25BC;",
+			allowEdit: true
 		};
 
 	// The actual plugin constructor
@@ -64,7 +65,7 @@
 			numble.bindNumbleScroll(numble.element, numble.settings);
 			numble.initValue(numble.element, numble.settings);
 		},
-		initDom: function(element){
+		initDom: function(element, settings){
 
 			// Add a wrapper for the control
 			// TODO allow additional classes to be added to the wrapper
@@ -76,7 +77,7 @@
 			$(element).hide();
 
 			// Inject a new element into the page to handle the display control of the numbers
-			$(element).after("<div class=\"numble-control\" contenteditable></div>");
+			$(element).after("<div class=\"numble-control\"" + (settings.allowEdit ? "contenteditable" : "") + "></div>");
 
 		},
 		bindElementChange: function(element, settings){

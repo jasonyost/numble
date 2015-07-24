@@ -7,9 +7,9 @@ numble is a simple jQuery plugin to override the default HTML5 field, to facilit
 ## Planned Features
 - [x] option to toggle scroll functionality
 - [x] options to change increment/decrement text
-- [ ] expose API
-- [ ] allow for direct edit of value in numble control
+- [x] allow for direct edit of value in numble control
 - [ ] bower and npm install support
+- [ ] better efficiency on change
 
 ## Installation & Usage
 Download or clone the repo and include the [jquery.numble.min.js](https://raw.githubusercontent.com/jasonyost/numble/master/dist/jquery.numble.min.js) file in your html. numble is a jQuery plugin so be sure it is loaded after jQuery
@@ -39,6 +39,7 @@ $('input[type=number]').numble({
   allowScroll: true, // if set to false numble won't bind to the mouse scroll event.
   incrementText: "&#x25B2;", // numble will display this text for increment
   decrementText: "&#x25BC;" // numble will display this text for decrement
+  allowEdit: true // if set to false numble control will not be content editable
 });
 ```
 
