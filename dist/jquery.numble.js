@@ -1,5 +1,5 @@
 /*
- *  numble - v0.0.1
+ *  numble - v0.0.17
  *  Simple jQuery number selector
  *  https://github.com/jasonyost/numble#readme
  *
@@ -76,7 +76,7 @@
 			$(element).hide();
 
 			// Inject a new element into the page to handle the display control of the numbers
-			$(element).after("<div class=\"numble-control\"></div>");
+			$(element).after("<div class=\"numble-control\" contenteditable></div>");
 
 		},
 		bindElementChange: function(element, settings){
@@ -88,6 +88,10 @@
 				control.text($(this).val());
 				// replace the controls on change
 				numble.addButtons(this, settings);
+			});
+
+			control.keyup(function(){
+				$(element).val(control.text().match(/[0-9]+/));
 			});
 		},
 		bindNumbleScroll: function(element, settings){

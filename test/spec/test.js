@@ -110,6 +110,24 @@
 			});
 		});
 
+		describe("contenteditable", function(){
+			it("should allow the value of .numble-control to be edited", function(){
+				expect(testControl).toHaveAttr("contenteditable");
+
+				var evt = spyOnEvent(testControl, 'keyup');
+				var e = jQuery.Event( "keyup",{type: "keyup"} );
+
+				testControl.text("1");
+
+				testControl.trigger(e);
+
+				expect("keyup").toHaveBeenTriggeredOn(testControl);
+				expect(evt).toHaveBeenTriggered();
+
+				expect(testInput).toHaveValue("1");
+			});
+		});
+
 		describe('settings', function() {
 
 			describe('debug', function() {

@@ -1,6 +1,6 @@
 {
   "name": "numble",
-  "version": "0.0.1",
+  "version": "0.0.17",
   "description": "Simple jQuery number selector",
   "main": "src/jquery.numble.js",
   "directories": {
