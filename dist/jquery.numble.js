@@ -1,5 +1,5 @@
 /*
- *  numble - v0.1.0
+ *  numble - v0.2.0
  *  Simple jQuery number selector
  *  https://github.com/jasonyost/numble#readme
  *
@@ -47,12 +47,6 @@
 		this._defaults = defaults;
 		this._name = pluginName;
 		this.init();
-
-		return {
-			test: function(){
-				console.log("test function called");
-			}
-		};
 	}
 
 	// Avoid Plugin.prototype conflicts

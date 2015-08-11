@@ -39,12 +39,6 @@
 		this._defaults = defaults;
 		this._name = pluginName;
 		this.init();
-
-		return {
-			test: function(){
-				console.log("test function called");
-			}
-		};
 	}
 
 	// Avoid Plugin.prototype conflicts
