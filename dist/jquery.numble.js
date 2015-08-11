@@ -69,8 +69,6 @@
 		initDom: function(element, settings){
 
 			// Add a wrapper for the control
-			// TODO allow additional classes to be added to the wrapper
-			// TODO add index to wrapper to differentiate multiple controls
 			$(element).wrap("<div class=\"numble-wrapper\"></div>");
 
 			// Hide the original control to prevent default browser styling interference
@@ -90,9 +88,16 @@
 				control.text($(this).val());
 			});
 
-			control.keyup(function(){
-				$(element).val(control.text().match(/[0-9]+/));
+			control.keydown(function(e){
+				if (String.fromCharCode(e.keyCode).match(/[^0-9]/g) && e.keyCode !== 8){
+					return false;
+				}
 			});
+
+			control.blur(function(){
+				$(element).val(control.text()).trigger("change");
+			});
+
 		},
 		bindNumbleScroll: function(element, settings){
 			var numble = this;

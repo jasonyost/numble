@@ -129,17 +129,18 @@
 			it("should allow the value of .numble-control to be edited", function(){
 				expect(testValue).toHaveAttr("contenteditable");
 
-				var evt = spyOnEvent(testControl, 'keyup');
-				var e = jQuery.Event( "keyup",{type: "keyup"} );
+				var evt = spyOnEvent(testControl, 'keydown');
+				var e = jQuery.Event( "keydown",{type: "keydown", keyCode: 49} );
 
 				testValue.text("1");
-
 				testValue.trigger(e);
+				testValue.trigger("blur");
 
-				expect("keyup").toHaveBeenTriggeredOn(testControl);
+				expect("keydown").toHaveBeenTriggeredOn(testControl);
 				expect(evt).toHaveBeenTriggered();
-
 				expect(testInput).toHaveValue("1");
+
+
 			});
 		});
 
