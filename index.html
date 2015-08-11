@@ -14,8 +14,8 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				$(".default-example").numble();
-				$(".settings-example").numble({minValue:4,maxValue:16,initialValue:8});
-				$(".negative-example").numble({maxValue:8,allowNegative:false});
+				$(".settings-example").numble({minValue:4,maxValue:16,initialValue:8,allowEdit:false,debug:true});
+				$(".negative-example").numble({maxValue:8,allowNegative:false,allowEdit:false});
 				$(".style-example").numble({allowNegative:false});
 				$(".external-example").numble({includeButtons:false});
         $(".text-example").numble({incrementText:"&#43;",decrementText:"&#45;"});
@@ -106,7 +106,8 @@
 <div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
 	minValue<span class="pl-k">:</span> <span class="pl-c1">4</span>,
 	maxValue<span class="pl-k">:</span> <span class="pl-c1">16</span>,
-	initialValue<span class="pl-k">:</span> <span class="pl-c1">8</span>
+	initialValue<span class="pl-k">:</span> <span class="pl-c1">8</span>,
+  allowEdit<span class="pl-k">:</span> <span class="pl-c1">false</span>
 });</pre></div>
 
 <h4>maxValue no negatives</h4>
@@ -117,7 +118,8 @@
 
 <div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
 	allowNegative<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-	maxValue<span class="pl-k">:</span> <span class="pl-c1">8</span>
+	maxValue<span class="pl-k">:</span> <span class="pl-c1">8</span>,
+  allowEdit<span class="pl-k">:</span> <span class="pl-c1">false</span>
 });</pre></div>
 
 <h2>
