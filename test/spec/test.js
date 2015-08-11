@@ -5,13 +5,14 @@
 
 		jasmine.getFixtures().fixturesPath = 'spec/fixtures';
 
-		var testInput, testControl;
+		var testInput, testControl, testValue;
 
 		beforeEach(function() {
 			loadFixtures('numblefixture.html');
 			testInput = $('.default-test');
 			testInput.numble();
 			testControl = testInput.siblings('.numble-control');
+			testValue = testControl.find(".numble-value");
 		});
 
 		afterEach(function(){
@@ -38,6 +39,10 @@
 				expect(testControl.parent()).toHaveClass('numble-wrapper');
 			});
 
+			it("should inject a value control into .numble-control", function(){
+				expect($('.numble-control')).toContainElement(".numble-value");
+			});
+
 			describe('given an existing numerical value', function() {
 				it('should display the value in the new element', function() {
 					testInput = $('.existing-test');
@@ -49,7 +54,17 @@
 
 			describe('given no original value', function() {
 				it('should set the initial number to zero', function() {
-					expect(testControl).toContainText('0');
+					expect(testValue).toContainText('0');
+				});
+			});
+
+			describe("given a disabled control", function(){
+				("it should not allow the value to be changed", function(){
+					testInput = $('.disabled-test');
+					testControl = testInput.siblings('.numble-control');
+					testValue = testControl.find(".numble-value");
+
+					pending("find more graceful way to test this");
 				});
 			});
 
@@ -112,14 +127,14 @@
 
 		describe("contenteditable", function(){
 			it("should allow the value of .numble-control to be edited", function(){
-				expect(testControl).toHaveAttr("contenteditable");
+				expect(testValue).toHaveAttr("contenteditable");
 
 				var evt = spyOnEvent(testControl, 'keyup');
 				var e = jQuery.Event( "keyup",{type: "keyup"} );
 
-				testControl.text("1");
+				testValue.text("1");
 
-				testControl.trigger(e);
+				testValue.trigger(e);
 
 				expect("keyup").toHaveBeenTriggeredOn(testControl);
 				expect(evt).toHaveBeenTriggered();

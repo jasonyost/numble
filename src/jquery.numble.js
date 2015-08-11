@@ -56,6 +56,7 @@
 			numble.bindElementChange(numble.element, numble.settings);
 			numble.bindNumbleScroll(numble.element, numble.settings);
 			numble.initValue(numble.element, numble.settings);
+			numble.addButtons(numble.element, numble.settings);
 		},
 		initDom: function(element, settings){
 
@@ -69,18 +70,16 @@
 			$(element).hide();
 
 			// Inject a new element into the page to handle the display control of the numbers
-			$(element).after("<div class=\"numble-control\"" + (settings.allowEdit ? "contenteditable" : "") + "></div>");
+			$(element).after("<div class=\"numble-control\"><div class=\"numble-value\" " + (settings.allowEdit ? "contenteditable" : "") + "></div></div>");
 
 		},
-		bindElementChange: function(element, settings){
+		bindElementChange: function(element){
 			var numble = this;
 			var control = numble.getNumbleControl(element);
 			// bind to change event of the input to update the new control
 			$(element).change(function() {
 				numble.debugMessage("change detected: " + $(this).val());
 				control.text($(this).val());
-				// replace the controls on change
-				numble.addButtons(this, settings);
 			});
 
 			control.keyup(function(){
@@ -116,7 +115,7 @@
 			$(element).change();
 		},
 		getNumbleControl: function(element){
-			return $(element).siblings(".numble-control");
+			return $(element).siblings(".numble-control").find(".numble-value");
 		},
 		addButtons: function(element, settings) {
 			var numble = this;
@@ -146,6 +145,10 @@
 			var numble = this;
 			var current_val = parseInt($(element).val());
 
+			if($(element).attr("disabled")){
+				return false;
+			}
+
 			if(numble.canIncrement(current_val, numble.settings)){
 				current_val++;
 				$(element).val(current_val).trigger("change");
@@ -170,6 +173,10 @@
 		decrementValue: function(element, settings) {
 			var numble = this;
 			var current_val = parseInt($(element).val());
+
+			if($(element).attr("disabled")){
+				return false;
+			}
 
 			var resp = numble.canDecrement(current_val, settings);
 			if(resp.can){

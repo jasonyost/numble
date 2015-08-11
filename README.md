@@ -9,7 +9,7 @@ numble is a simple jQuery plugin to override the default HTML5 field, to facilit
 - [x] options to change increment/decrement text
 - [x] allow for direct edit of value in numble control
 - [ ] bower and npm install support
-- [ ] better efficiency on change
+- [x] better efficiency on change
 
 ## Installation & Usage
 Download or clone the repo and include the [jquery.numble.min.js](https://raw.githubusercontent.com/jasonyost/numble/master/dist/jquery.numble.min.js) file in your html. numble is a jQuery plugin so be sure it is loaded after jQuery
