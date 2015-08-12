@@ -219,6 +219,29 @@
 				});
 			});
 
+			describe("given minimum and initial values", function(){
+				it("should allow the decrement of the initial value to the minimum", function(){
+					testInput = $('.settings-test');
+					testInput.numble({initialValue:3,minValue:2,maxValue:4});
+					testControl = testInput.siblings('.numble-control');
+
+					testControl.find('.numble-decrement').click();
+					expect(testInput).toHaveValue("2");
+
+					testControl.find('.numble-decrement').click();
+					expect(testInput).toHaveValue("2");
+
+					testControl.find('.numble-increment').click();
+					expect(testInput).toHaveValue("3");
+
+					testControl.find('.numble-increment').click();
+					expect(testInput).toHaveValue("4");
+
+					testControl.find('.numble-increment').click();
+					expect(testInput).toHaveValue("4");
+				});
+			});
+
 			describe("allowScroll", function(){
 				describe("given a value of false", function(){
 					it("should not bind the control to a scroll event", function(){

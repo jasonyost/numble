@@ -159,7 +159,7 @@
 		canDecrement: function(current_val, settings){
 			if(settings.minValue){
 				// a min value has been defined
-				if(current_val >= settings.minValue){
+				if(current_val <= settings.minValue){
 					// cannot decrement
 					return {can: false, message: "minValue set to " + settings.minValue};
 				}
