@@ -4,13 +4,6 @@ numble is a simple jQuery plugin to override the default HTML5 field, to facilit
 
 [![build status](https://travis-ci.org/jasonyost/numble.svg)](https://travis-ci.org/jasonyost/numble)
 
-## Planned Features
-- [x] option to toggle scroll functionality
-- [x] options to change increment/decrement text
-- [x] allow for direct edit of value in numble control
-- [ ] bower and npm install support
-- [x] better efficiency on change
-
 ## Installation & Usage
 Download or clone the repo and include the [jquery.numble.min.js](https://raw.githubusercontent.com/jasonyost/numble/master/dist/jquery.numble.min.js) file in your html. numble is a jQuery plugin so be sure it is loaded after jQuery
 
@@ -81,6 +74,14 @@ numble adds a few elements add classes to the page and control. Inline CSS is no
 
 ## Form interactions
 numble updates the original hidden field with the number as it changes, the change event of the field is bound to update the display of the control on change.
+
+## Changelog
+### 1.0.1
+- Add disabled control support
+
+### 1.0.2
+- Add readonly control support, if original control is readonly or disabled, number value cannot be changed with buttons or direct edit
+- Prevent increment number value with direct edit beyond min/max values. Number display will revert to previous number on blur.
 
 ## Thanks
 Based on the excellent [jquery-boilerplate/jquery-boilerplate](https://github.com/jquery-boilerplate/jquery-boilerplate)

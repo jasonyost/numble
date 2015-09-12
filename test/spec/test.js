@@ -64,12 +64,22 @@
 					testControl = testInput.siblings('.numble-control');
 					testValue = testControl.find(".numble-value");
 
-					pending("find more graceful way to test this");
+					testControl.find('.numble-decrement').click();
+					expect(testControl).toContainText("0");
+
+					testControl.find('.numble-increment').click();
+					expect(testControl).toContainText("0");
+
+					expect(testValue).not.toHaveAttr("contenteditable");
+
+					var scrollEvent = spyOnEvent(testControl, 'DOMMouseScroll');
+					var e = jQuery.Event( "DOMMouseScroll",{originalEvent: {detail:-1}, type: "DOMMouseScroll", which: 1, target: testInput, currentTarget: testInput} );
+
+					testControl.trigger(e);
+					expect(testControl).toContainText("0");
 				});
 			});
 
-			// FIXME Need to test the scroll event on the mouse, the code is working but I am unable to
-			// determine how to send the mouse wheel event to the page
 			describe('mouse wheel control', function() {
 
 				describe('in Firefox', function() {
@@ -139,23 +149,10 @@
 				expect("keydown").toHaveBeenTriggeredOn(testControl);
 				expect(evt).toHaveBeenTriggered();
 				expect(testInput).toHaveValue("1");
-
-
 			});
 		});
 
 		describe('settings', function() {
-
-			describe('debug', function() {
-				describe('given the default setting of true', function() {
-					it('should log console messages', function() {
-						var e = jasmine.createSpy(console.log);
-						expect(e).toHaveBeenCalled();
-						pending("Test is not working");
-					});
-				});
-			});
-
 			describe('includeButtons', function() {
 				describe('given the setting of false', function() {
 					it('should not add buttons to the control', function() {

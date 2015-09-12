@@ -18,12 +18,12 @@
 	<script src="spec/test.js"></script>
 
 	<div class="test-area">
-	  <input type="number" name="numbletest">
+	  <input type="number" name="numbletest" value="4">
 	</div>
 
 	<script type="text/javascript">
 		$(document).ready(function(){
-      var numble = $("input[name=numbletest]").numble({debug:true,allowNegative:false,allowEdit:false}).data("plugin_numble");
+      var numble = $("input[name=numbletest]").numble({debug:true,allowNegative:false,allowEdit:true,minValue:4,maxValue:8}).data("plugin_numble");
     });
 	</script>
 </body>

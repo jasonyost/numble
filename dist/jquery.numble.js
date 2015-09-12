@@ -1,5 +1,5 @@
 /*
- *  numble - v1.0.0
+ *  numble - v1.0.1
  *  Simple jQuery number selector
  *  https://github.com/jasonyost/numble#readme
  *
@@ -61,7 +61,7 @@
 			numble.addButtons(numble.element, numble.settings);
 		},
 		initDom: function(element, settings){
-
+			var numble = this;
 			// Add a wrapper for the control
 			$(element).wrap("<div class=\"numble-wrapper\"></div>");
 
@@ -70,7 +70,7 @@
 			$(element).hide();
 
 			// Inject a new element into the page to handle the display control of the numbers
-			$(element).after("<div class=\"numble-control\"><div class=\"numble-value\" " + (settings.allowEdit ? "contenteditable" : "") + "></div></div>");
+			$(element).after("<div class=\"numble-control\"><div class=\"numble-value\" " + (settings.allowEdit && !numble.isReadonly(element) ? "contenteditable" : "") + "></div></div>");
 
 		},
 		bindElementChange: function(element){
@@ -89,6 +89,16 @@
 			});
 
 			control.blur(function(){
+				if(control.text() > numble.settings.maxValue){
+					numble.debugMessage("value set greater than maxValue, reverting");
+					control.text($(element).val());
+					return;
+				}
+				if(control.text() < numble.settings.minValue){
+					numble.debugMessage("value set less than minValue, reverting");
+					control.text($(element).val());
+					return;
+				}
 				$(element).val(control.text()).trigger("change");
 			});
 
@@ -152,7 +162,8 @@
 			var numble = this;
 			var current_val = parseInt($(element).val());
 
-			if($(element).attr("disabled")){
+			if($(element).attr("disabled") || $(element).attr("readonly")){
+				this.debugMessage("control is disabled/readonly");
 				return false;
 			}
 
@@ -181,7 +192,8 @@
 			var numble = this;
 			var current_val = parseInt($(element).val());
 
-			if($(element).attr("disabled")){
+			if($(element).attr("disabled") || $(element).attr("readonly")){
+				this.debugMessage("control is disabled/readonly");
 				return false;
 			}
 
@@ -201,6 +213,9 @@
 				val = parseInt(settings.initialValue) || 0;
 			}
 			return val;
+		},
+		isReadonly: function(element){
+			return $(element).attr("disabled") || $(element).attr("readonly");
 		},
 		debugMessage: function(message) {
 			if (this.settings.debug) {
