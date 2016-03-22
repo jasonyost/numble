@@ -31,8 +31,9 @@ $('input[type=number]').numble({
   initialValue: undefined, // if set numble will set the initial value of the control to this instead of 0 if the field does not already contain a value
   allowScroll: true, // if set to false numble won't bind to the mouse scroll event.
   incrementText: "&#x25B2;", // numble will display this text for increment
-  decrementText: "&#x25BC;" // numble will display this text for decrement
-  allowEdit: true // if set to false numble control will not be content editable
+  decrementText: "&#x25BC;", // numble will display this text for decrement
+  allowEdit: true, // if set to false numble control will not be content editable
+  hideButtonsOnMinMax: false // if set to true and includeButtons is true, will hide the increment and decrement buttons if the min or max values are reached
 });
 ```
 
@@ -82,6 +83,9 @@ numble updates the original hidden field with the number as it changes, the chan
 ### 1.0.2
 - Add readonly control support, if original control is readonly or disabled, number value cannot be changed with buttons or direct edit
 - Prevent increment number value with direct edit beyond min/max values. Number display will revert to previous number on blur.
+
+### 1.1.0
+- Added new setting hideButtonsOnMinMax
 
 ## Thanks
 Based on the excellent [jquery-boilerplate/jquery-boilerplate](https://github.com/jquery-boilerplate/jquery-boilerplate)

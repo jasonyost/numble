@@ -153,6 +153,7 @@
 		});
 
 		describe('settings', function() {
+
 			describe('includeButtons', function() {
 				describe('given the setting of false', function() {
 					it('should not add buttons to the control', function() {
@@ -291,17 +292,105 @@
 				});
 			});
 
-		});
-
-		describe("allowEdit", function(){
-			describe("given a value of false", function(){
-				it("should not set .numble-control to contenteditable", function(){
-					testInput = $('.settings-test');
-					testInput.numble({allowEdit:false});
-					testControl = testInput.siblings('.numble-control');
-					expect(testControl).not.toHaveAttr("contenteditable");
+			describe("allowEdit", function(){
+				describe("given a value of false", function(){
+					it("should not set .numble-control to contenteditable", function(){
+						testInput = $('.settings-test');
+						testInput.numble({allowEdit:false});
+						testControl = testInput.siblings('.numble-control');
+						expect(testControl).not.toHaveAttr("contenteditable");
+					});
 				});
 			});
+
+			describe("hideControlsOnMinMax", function(){
+
+				describe("given a value of false", function(){
+
+					describe("given a control with a max value", function(){
+						it("should not add display:none to the .numble-increment control", function(){
+							testInput = $('.minmax-val-test');
+							testInput.numble({maxValue:5});
+							testControl = testInput.siblings('.numble-control');
+							expect(testControl.find('.numble-increment')).toBeVisible();
+						});
+					});
+
+					describe("given a control with a min value", function(){
+						it("should not add display:none to the .numble-decrement control", function(){
+							testInput = $('.minmax-val-test');
+							testInput.numble({minValue:5});
+							testControl = testInput.siblings('.numble-control');
+							expect(testControl.find('.numble-decrement')).toBeVisible();
+						});
+					});
+
+				});
+
+				describe("given a value of true", function(){
+
+					describe("given a control with a max value which is set to the max value", function(){
+
+						it("should add display:none to the .numble-increment control", function(){
+							testInput = $('.minmax-val-test');
+							testInput.numble({maxValue:5,hideButtonsOnMinMax:true});
+							testControl = testInput.siblings('.numble-control');
+							expect(testControl.find('.numble-increment')).not.toBeVisible();
+						});
+
+						it("should remove display:none on decrement", function(){
+							testInput = $('.minmax-val-test');
+							testInput.numble({maxValue:5,hideButtonsOnMinMax:true});
+							testControl = testInput.siblings('.numble-control');
+							testControl.find('.numble-decrement').click();
+							expect(testControl.find('.numble-increment')).toBeVisible();
+						});
+
+					});
+
+					describe("given a control with a min value which is set to the min-value", function(){
+
+						it("should add display:none to the .numble-decrement control", function(){
+							testInput = $('.minmax-val-test');
+							testInput.numble({minValue:5,hideButtonsOnMinMax:true});
+							testControl = testInput.siblings('.numble-control');
+							expect(testControl.find('.numble-decrement')).not.toBeVisible();
+						});
+
+						it("should remove display:none on increment", function(){
+							testInput = $('.minmax-val-test');
+							testInput.numble({minValue:5,hideButtonsOnMinMax:true});
+							testControl = testInput.siblings('.numble-control');
+							testControl.find('.numble-increment').click();
+							expect(testControl.find('.numble-decrement')).toBeVisible();
+						});
+
+					});
+
+				});
+
+			});
+
+		});
+
+		describe("api", function(){
+
+			describe("incrementable", function(){
+				it("should expose the canIncrement API", function(){
+					var can = $('.default-test').data("plugin_numble").incrementable();
+					expect(can).toBe(true);
+				});
+			});
+
+			describe("decrementable", function(){
+				it("should expose the canDecrement API", function(){
+					testInput = $('.minmax-val-test');
+					testInput.numble({minValue:5});
+					var can = testInput.data("plugin_numble").decrementable();
+					expect(can).toBe(false);
+				});
+			});
+
 		});
 
 	});

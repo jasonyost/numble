@@ -25,7 +25,8 @@
 			allowScroll: true,
 			incrementText: "&#x25B2;",
 			decrementText: "&#x25BC;",
-			allowEdit: true
+			allowEdit: true,
+			hideButtonsOnMinMax: false
 		};
 
 	// The actual plugin constructor
@@ -38,6 +39,23 @@
 		this.settings = $.extend({}, defaults, options);
 		this._defaults = defaults;
 		this._name = pluginName;
+
+		// expose canIncrement
+		this.incrementable = function(){
+			var current_val = parseInt($(this.element).val());
+			var can = this.canIncrement(current_val, this.settings);
+			this.debugMessage("incrementable called : " + can);
+			return can;
+		};
+
+		// expose canDecrement
+		this.decrementable = function(){
+			var current_val = parseInt($(this.element).val());
+			var resp = this.canDecrement(current_val, this.settings);
+			this.debugMessage("incrementable called : " + resp.can);
+			return resp.can;
+		};
+
 		this.init();
 	}
 
@@ -72,6 +90,25 @@
 			$(element).change(function() {
 				numble.debugMessage("change detected: " + $(this).val());
 				control.text($(this).val());
+				var incrementButton = numble.getIncrementButton(element);
+				var decrementButton = numble.getDecrementButton(element);
+
+				if(numble.settings.includeButtons && numble.settings.hideButtonsOnMinMax)
+				{
+					if(numble.canIncrement(numble.getCurrentValue(element), numble.settings))
+					{
+						incrementButton.show();
+					}else{
+						console.log();
+						incrementButton.hide();
+					}
+					if(numble.canDecrement(numble.getCurrentValue(element), numble.settings).can)
+					{
+						decrementButton.show();
+					}else{
+						decrementButton.hide();
+					}
+				}
 			});
 
 			control.keydown(function(e){
@@ -130,16 +167,29 @@
 			var numble = this;
 			if(settings.includeButtons){
 				var n = $(element).siblings(".numble-control");
-				n.append("<span class=\"numble-increment numble-arrow\">"+ settings.incrementText +"</span>");
-				n.append("<span class=\"numble-decrement numble-arrow\">"+ settings.decrementText +"</span>");
+				var current_value = numble.getCurrentValue(element);
 
+				n.append("<span class=\"numble-increment numble-arrow\">"+ settings.incrementText +"</span>");
 				n.find(".numble-increment").click(function(){
 					numble.incrementValue(element);
 				});
 
+				if(settings.hideButtonsOnMinMax && !numble.canIncrement(current_value, settings))
+				{
+					numble.debugMessage("hideButtonsOnMinMax set, current value: " + current_value + ", cannot increment, hiding button");
+					n.find(".numble-increment").hide();
+				}
+
+				n.append("<span class=\"numble-decrement numble-arrow\">"+ settings.decrementText +"</span>");
 				n.find(".numble-decrement").click(function(){
 					numble.decrementValue(element, settings);
 				});
+
+				if(settings.hideButtonsOnMinMax && !numble.canDecrement(current_value, settings).can)
+				{
+					numble.debugMessage("hideButtonsOnMinMax set, current value: " + current_value + ", cannot decrement, hiding button");
+					n.find(".numble-decrement").hide();
+				}
 			}
 		},
 		canIncrement: function(current_val, settings){
@@ -214,6 +264,18 @@
 				console.log(message);
 			}
 		},
+		getCurrentValue: function(element){
+			var current_value = parseInt($(element).val());
+			return current_value;
+		},
+		getIncrementButton: function(element){
+			var n = $(element).siblings(".numble-control");
+			return n.find(".numble-increment");
+		},
+		getDecrementButton: function(element){
+			var n = $(element).siblings(".numble-control");
+			return n.find(".numble-decrement");
+		}
 	});
 
 	// A really lightweight plugin wrapper around the constructor,
