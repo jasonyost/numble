@@ -19,6 +19,7 @@
 				$(".style-example").numble({allowNegative:false});
 				$(".external-example").numble({includeButtons:false});
         $(".text-example").numble({incrementText:"&#43;",decrementText:"&#45;"});
+        $(".hide-example").numble({allowNegative:false,maxValue:4,hideButtonsOnMinMax:true})
 
 				$(".external-increment").click(function(){
 					$(".external-example").val("5");
@@ -94,7 +95,8 @@
   allowScroll<span class="pl-k">:</span> <span class="pl-c1">true</span>, <span class="pl-c">// if set to false numble will not bind to the mouse wheel event</span>
   incrementText<span class="pl-k">:</span> <span class="pl-c1">&#x25B2;</span>, <span class="pl-c">// numble will display this text for increment</span>
   decrementText<span class="pl-k">:</span> <span class="pl-c1">&#x25BC;</span>, <span class="pl-c">// numble will display this text for decrement</span>
-  allowEdit<span class="pl-k">:</span> <span class="pl-c1">true</span> <span class="pl-c">// if set to false numble control will not be content editable</span>
+  allowEdit,<span class="pl-k">:</span> <span class="pl-c1">true</span> <span class="pl-c">// if set to false numble control will not be content editable</span>
+  hideButtonsOnMinMax<span class="pl-k">:</span> <span class="pl-c1">false</span> <span class="pl-c">// if set to true the increment and decrement controls will be hidden once the min/max value has been reached</span>
 });</pre></div>
 
 <h4>Min/Max Value, with an initial value</h4>
@@ -104,9 +106,9 @@
 </p>
 
 <div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
-	minValue<span class="pl-k">:</span> <span class="pl-c1">4</span>,
-	maxValue<span class="pl-k">:</span> <span class="pl-c1">16</span>,
-	initialValue<span class="pl-k">:</span> <span class="pl-c1">8</span>
+  minValue<span class="pl-k">:</span> <span class="pl-c1">4</span>,
+  maxValue<span class="pl-k">:</span> <span class="pl-c1">16</span>,
+  initialValue<span class="pl-k">:</span> <span class="pl-c1">8</span>
 });</pre></div>
 
 <h4>maxValue no negatives</h4>
@@ -116,8 +118,8 @@
 </p>
 
 <div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
-	allowNegative<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-	maxValue<span class="pl-k">:</span> <span class="pl-c1">8</span>
+  allowNegative<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+  maxValue<span class="pl-k">:</span> <span class="pl-c1">8</span>
 });</pre></div>
 
 <h2>
@@ -172,6 +174,16 @@
 <div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
   incrementText<span class="pl-k">:</span> <span class="pl-c1">"&#43;"</span>,
   decrementText<span class="pl-k">:</span> <span class="pl-c1">"&#45;"</span>
+});</pre></div>
+
+<h4>Hiding buttons on min/max</h4>
+<p>
+	<input type="number" name="hidebuttons" class="hide-example">
+</p>
+
+<div class="highlight highlight-javascript"><pre>$(<span class="pl-s"><span class="pl-pds">"</span>input[type=number]<span class="pl-pds">"</span></span>).numble({
+  allowNegative<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+  maxValue<span class="pl-k">:</span> <span class="pl-c1">4</span>
 });</pre></div>
 
 <h2>
